@@ -127,5 +127,11 @@ namespace WindowsForms_lab_6_v1
         {
             MyMethods.UpdateLV(_account, Portfolio_ImL, Portfolio_LV);
         }
+
+        private void Add_B_Click(object sender, EventArgs e)
+        {
+            var orderEditing = new OrderEditing(_account.AC_Account_ID);
+            orderEditing.Show();
+        }
     }
 }

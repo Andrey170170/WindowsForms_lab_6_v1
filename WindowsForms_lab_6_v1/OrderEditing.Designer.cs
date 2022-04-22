@@ -28,10 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Save_B = new System.Windows.Forms.Button();
-            this.Cancel_B = new System.Windows.Forms.Button();
-            this.Change_B = new System.Windows.Forms.Button();
-            this.Delete_B = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Order_Img = new System.Windows.Forms.PictureBox();
             this.OrderName_TB = new System.Windows.Forms.TextBox();
@@ -44,54 +40,9 @@
             this.OrderCLogin_TB = new System.Windows.Forms.TextBox();
             this.OrderALogin_TB = new System.Windows.Forms.TextBox();
             this.OrderImage_D = new System.Windows.Forms.OpenFileDialog();
+            this.SaveImg_D = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.Order_Img)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Save_B
-            // 
-            this.Save_B.Enabled = false;
-            this.Save_B.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Save_B.Location = new System.Drawing.Point(93, 705);
-            this.Save_B.Name = "Save_B";
-            this.Save_B.Size = new System.Drawing.Size(111, 43);
-            this.Save_B.TabIndex = 0;
-            this.Save_B.Text = "Сохранить";
-            this.Save_B.UseVisualStyleBackColor = true;
-            this.Save_B.Click += new System.EventHandler(this.Save_B_Click);
-            // 
-            // Cancel_B
-            // 
-            this.Cancel_B.Enabled = false;
-            this.Cancel_B.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Cancel_B.Location = new System.Drawing.Point(210, 705);
-            this.Cancel_B.Name = "Cancel_B";
-            this.Cancel_B.Size = new System.Drawing.Size(111, 43);
-            this.Cancel_B.TabIndex = 1;
-            this.Cancel_B.Text = "Сбросить";
-            this.Cancel_B.UseVisualStyleBackColor = true;
-            this.Cancel_B.Click += new System.EventHandler(this.Cancel_B_Click);
-            // 
-            // Change_B
-            // 
-            this.Change_B.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Change_B.Location = new System.Drawing.Point(327, 705);
-            this.Change_B.Name = "Change_B";
-            this.Change_B.Size = new System.Drawing.Size(111, 43);
-            this.Change_B.TabIndex = 2;
-            this.Change_B.Text = "Изменить";
-            this.Change_B.UseVisualStyleBackColor = true;
-            this.Change_B.Click += new System.EventHandler(this.Change_B_Click);
-            // 
-            // Delete_B
-            // 
-            this.Delete_B.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Delete_B.Location = new System.Drawing.Point(444, 705);
-            this.Delete_B.Name = "Delete_B";
-            this.Delete_B.Size = new System.Drawing.Size(111, 43);
-            this.Delete_B.TabIndex = 3;
-            this.Delete_B.Text = "Удалить";
-            this.Delete_B.UseVisualStyleBackColor = true;
-            this.Delete_B.Click += new System.EventHandler(this.Delete_B_Click);
             // 
             // label1
             // 
@@ -109,15 +60,13 @@
             this.Order_Img.Enabled = false;
             this.Order_Img.Location = new System.Drawing.Point(28, 21);
             this.Order_Img.Name = "Order_Img";
-            this.Order_Img.Size = new System.Drawing.Size(605, 268);
+            this.Order_Img.Size = new System.Drawing.Size(605, 242);
             this.Order_Img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Order_Img.TabIndex = 5;
             this.Order_Img.TabStop = false;
-            this.Order_Img.Click += new System.EventHandler(this.Order_Img_Click);
             // 
             // OrderName_TB
             // 
-            this.OrderName_TB.Enabled = false;
             this.OrderName_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OrderName_TB.Location = new System.Drawing.Point(133, 305);
             this.OrderName_TB.Name = "OrderName_TB";
@@ -136,7 +85,6 @@
             // 
             // OrderPrice_TB
             // 
-            this.OrderPrice_TB.Enabled = false;
             this.OrderPrice_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OrderPrice_TB.Location = new System.Drawing.Point(133, 452);
             this.OrderPrice_TB.Name = "OrderPrice_TB";
@@ -155,7 +103,6 @@
             // 
             // OrderDecs_TB
             // 
-            this.OrderDecs_TB.Enabled = false;
             this.OrderDecs_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OrderDecs_TB.Location = new System.Drawing.Point(133, 502);
             this.OrderDecs_TB.Multiline = true;
@@ -185,17 +132,14 @@
             // 
             // OrderCLogin_TB
             // 
-            this.OrderCLogin_TB.Enabled = false;
             this.OrderCLogin_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OrderCLogin_TB.Location = new System.Drawing.Point(133, 404);
             this.OrderCLogin_TB.Name = "OrderCLogin_TB";
             this.OrderCLogin_TB.Size = new System.Drawing.Size(209, 29);
             this.OrderCLogin_TB.TabIndex = 18;
-            this.OrderCLogin_TB.Text = "Не указан";
             // 
             // OrderALogin_TB
             // 
-            this.OrderALogin_TB.Enabled = false;
             this.OrderALogin_TB.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OrderALogin_TB.Location = new System.Drawing.Point(133, 354);
             this.OrderALogin_TB.Name = "OrderALogin_TB";
@@ -206,6 +150,10 @@
             // 
             this.OrderImage_D.Filter = "image file (*.jpg, *.png) |*.jpg;*.png|All files|*.*";
             this.OrderImage_D.FileOk += new System.ComponentModel.CancelEventHandler(this.OrderImage_D_FileOk);
+            // 
+            // SaveImg_D
+            // 
+            this.SaveImg_D.Filter = "image file (*.jpg, *.png) |*.jpg;*.png|All files|*.*";
             // 
             // OrderEditing
             // 
@@ -223,10 +171,6 @@
             this.Controls.Add(this.OrderName_TB);
             this.Controls.Add(this.Order_Img);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.Delete_B);
-            this.Controls.Add(this.Change_B);
-            this.Controls.Add(this.Cancel_B);
-            this.Controls.Add(this.Save_B);
             this.Name = "OrderEditing";
             this.Text = "OrderEditing";
             ((System.ComponentModel.ISupportInitialize)(this.Order_Img)).EndInit();
@@ -236,11 +180,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button Save_B;
-        private System.Windows.Forms.Button Cancel_B;
-        private System.Windows.Forms.Button Change_B;
-        private System.Windows.Forms.Button Delete_B;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox Order_Img;
         private System.Windows.Forms.TextBox OrderName_TB;
@@ -253,5 +192,14 @@
         private System.Windows.Forms.TextBox OrderCLogin_TB;
         private System.Windows.Forms.TextBox OrderALogin_TB;
         private System.Windows.Forms.OpenFileDialog OrderImage_D;
+        private System.Windows.Forms.SaveFileDialog SaveImg_D;
+        private System.Windows.Forms.Button Save_B;
+        private System.Windows.Forms.Button Cancel_B;
+        private System.Windows.Forms.Button Change_B;
+        private System.Windows.Forms.Button Delete_B;
+        private System.Windows.Forms.Button ChangeImg_B;
+        private System.Windows.Forms.Button SaveImg_B;
+        private System.Windows.Forms.Button DeleteImg_B;
+        private System.Windows.Forms.Button PlaceImg_B;
     }
 }

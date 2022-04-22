@@ -15,16 +15,176 @@ namespace WindowsForms_lab_6_v1
 {
     public partial class OrderEditing : Form
     {
-        private readonly Order _order;
+        private readonly Order _order = new Order();
+        private readonly int _id;
 
         public OrderEditing()
         {
+
+        }
+
+        public OrderEditing(int UserId)
+        {
             InitializeComponent();
+
+            _id = UserId;
+            Save_B = new Button();
+            Cancel_B = new Button();
+            DeleteImg_B = new Button();
+            PlaceImg_B = new Button();
+            // 
+            // Save_B
+            // 
+            Save_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Save_B.Location = new Point(231, 705);
+            Save_B.Name = "Save_B";
+            Save_B.Size = new Size(111, 43);
+            Save_B.TabIndex = 0;
+            Save_B.Text = "Сохранить";
+            Save_B.UseVisualStyleBackColor = true;
+            Save_B.Click += new EventHandler(Save_B_Click);
+            // 
+            // Cancel_B
+            // 
+            Cancel_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Cancel_B.Location = new Point(348, 705);
+            Cancel_B.Name = "Cancel_B";
+            Cancel_B.Size = new Size(111, 43);
+            Cancel_B.TabIndex = 1;
+            Cancel_B.Text = "Сбросить";
+            Cancel_B.UseVisualStyleBackColor = true;
+            Cancel_B.Click += new EventHandler(Cancel_B_Click);
+            // 
+            // DeleteImg_B
+            // 
+            DeleteImg_B.Location = new Point(143, 269);
+            DeleteImg_B.Name = "DeleteImg_B";
+            DeleteImg_B.Size = new Size(75, 23);
+            DeleteImg_B.TabIndex = 25;
+            DeleteImg_B.Text = "Удалить";
+            DeleteImg_B.UseVisualStyleBackColor = true;
+            DeleteImg_B.Click += new EventHandler(DeleteImg_B_Click);
+            // 
+            // PlaceImg_B
+            // 
+            PlaceImg_B.Location = new Point(62, 269);
+            PlaceImg_B.Name = "PlaceImg_B";
+            PlaceImg_B.Size = new Size(75, 23);
+            PlaceImg_B.TabIndex = 26;
+            PlaceImg_B.Text = "Установить";
+            PlaceImg_B.UseVisualStyleBackColor = true;
+            PlaceImg_B.Click += new EventHandler(Order_Img_Click);
+
+            Controls.Add(Cancel_B);
+            Controls.Add(Save_B);
+            Controls.Add(PlaceImg_B);
+            Controls.Add(DeleteImg_B);
+
+            using (var db = new OAIP_6_v1Entities())
+            {
+                OrderALogin_TB.Text = db.Accounts.First(account => account.AC_Account_ID == UserId)
+                    .AC_Login;
+            }
         }
 
         public OrderEditing(Order order)
         {
             InitializeComponent();
+
+            Save_B = new Button();
+            Cancel_B = new Button();
+            Change_B = new Button();
+            Delete_B = new Button();
+            ChangeImg_B = new Button();
+            SaveImg_B = new Button();
+            DeleteImg_B = new Button();
+            // 
+            // Save_B
+            // 
+            Save_B.Enabled = false;
+            Save_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Save_B.Location = new Point(93, 705);
+            Save_B.Name = "Save_B";
+            Save_B.Size = new Size(111, 43);
+            Save_B.TabIndex = 0;
+            Save_B.Text = "Сохранить";
+            Save_B.UseVisualStyleBackColor = true;
+            Save_B.Click += new EventHandler(Save_B_Click);
+            // 
+            // Cancel_B
+            // 
+            Cancel_B.Enabled = false;
+            Cancel_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Cancel_B.Location = new Point(210, 705);
+            Cancel_B.Name = "Cancel_B";
+            Cancel_B.Size = new Size(111, 43);
+            Cancel_B.TabIndex = 1;
+            Cancel_B.Text = "Сбросить";
+            Cancel_B.UseVisualStyleBackColor = true;
+            Cancel_B.Click += new EventHandler(Cancel_B_Click);
+            // 
+            // Change_B
+            // 
+            Change_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Change_B.Location = new Point(327, 705);
+            Change_B.Name = "Change_B";
+            Change_B.Size = new Size(111, 43);
+            Change_B.TabIndex = 2;
+            Change_B.Text = "Изменить";
+            Change_B.UseVisualStyleBackColor = true;
+            Change_B.Click += new EventHandler(Change_B_Click);
+            // 
+            // Delete_B
+            // 
+            Delete_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Delete_B.Location = new Point(444, 705);
+            Delete_B.Name = "Delete_B";
+            Delete_B.Size = new Size(111, 43);
+            Delete_B.TabIndex = 3;
+            Delete_B.Text = "Удалить";
+            Delete_B.UseVisualStyleBackColor = true;
+            Delete_B.Click += new EventHandler(Delete_B_Click);
+            // 
+            // ChangeImg_B
+            // 
+            ChangeImg_B.Enabled = false;
+            ChangeImg_B.Location = new Point(48, 269);
+            ChangeImg_B.Name = "ChangeImg_B";
+            ChangeImg_B.Size = new Size(75, 23);
+            ChangeImg_B.TabIndex = 23;
+            ChangeImg_B.Text = "Изменить";
+            ChangeImg_B.UseVisualStyleBackColor = true;
+            ChangeImg_B.Click += new EventHandler(Order_Img_Click);
+            // 
+            // SaveImg_B
+            // 
+            SaveImg_B.Location = new Point(133, 269);
+            SaveImg_B.Name = "SaveImg_B";
+            SaveImg_B.Size = new Size(75, 23);
+            SaveImg_B.TabIndex = 24;
+            SaveImg_B.Text = "Скачать";
+            SaveImg_B.UseVisualStyleBackColor = true;
+            SaveImg_B.Click += new EventHandler(SaveImg_B_Click);
+            // 
+            // DeleteImg_B
+            // 
+            DeleteImg_B.Enabled = false;
+            DeleteImg_B.Location = new Point(214, 269);
+            DeleteImg_B.Name = "DeleteImg_B";
+            DeleteImg_B.Size = new Size(75, 23);
+            DeleteImg_B.TabIndex = 25;
+            DeleteImg_B.Text = "Удалить";
+            DeleteImg_B.UseVisualStyleBackColor = true;
+            DeleteImg_B.Click += new EventHandler(DeleteImg_B_Click);
+
+            Controls.Add(DeleteImg_B);
+            Controls.Add(SaveImg_B);
+            Controls.Add(ChangeImg_B);
+            Controls.Add(Delete_B);
+            Controls.Add(Change_B);
+            Controls.Add(Cancel_B);
+            Controls.Add(Save_B);
+
             _order = order;
             OrderName_TB.Text = order.ORD_Name;
             OrderPrice_TB.Text = order.ORD_Cost.ToString();
@@ -39,6 +199,8 @@ namespace WindowsForms_lab_6_v1
                     ? db.Accounts.First(account => account.AC_Account_ID == order.ORD_Customer_ID).AC_Login
                     : "";
             }
+
+            ChangeState(false);
         }
 
         private void Change_B_Click(object sender, EventArgs e)
@@ -87,7 +249,13 @@ namespace WindowsForms_lab_6_v1
                     _order.ORD_Picture = MyMethods.ImageToByteArray(Order_Img.Image);
                     _order.ORD_Description = OrderDecs_TB.Text;
                     _order.ORD_Cost = int.Parse(OrderPrice_TB.Text);
-                    db.Entry(_order).State = EntityState.Modified;
+                    if (_order.ORD_ID != 0)
+                        db.Entry(_order).State = EntityState.Modified;
+                    else
+                    {
+                        _order.ORD_ST_ID = 5;
+                        db.Entry(_order).State = EntityState.Added;
+                    }
                     db.SaveChanges();
                 }
                 ChangeState(false);
@@ -125,7 +293,7 @@ namespace WindowsForms_lab_6_v1
                     db.Entry(_order).State = EntityState.Deleted;
                     db.SaveChanges();
                 }
-                this.Close();
+                Close();
                 MessageBox.Show("Удаление успешно");
             }
             catch (Exception exception)
@@ -136,14 +304,31 @@ namespace WindowsForms_lab_6_v1
 
         private void ChangeState(bool state = true)
         {
-            Order_Img.Enabled = state;
-            OrderName_TB.Enabled = state;
-            OrderALogin_TB.Enabled = state;
-            OrderCLogin_TB.Enabled = state;
-            OrderPrice_TB.Enabled = state;
-            OrderDecs_TB.Enabled = state;
-            Save_B.Enabled = state;
-            Cancel_B.Enabled = state;
+            if (Order_Img != null) Order_Img.Enabled = state;
+            if (OrderName_TB != null) OrderName_TB.Enabled = state;
+            if (OrderALogin_TB != null) OrderALogin_TB.Enabled = state;
+            if (OrderCLogin_TB != null) OrderCLogin_TB.Enabled = state;
+            if (OrderPrice_TB != null) OrderPrice_TB.Enabled = state;
+            if (OrderDecs_TB != null) OrderDecs_TB.Enabled = state;
+            if (Save_B != null) Save_B.Enabled = state;
+            if (Cancel_B != null) Cancel_B.Enabled = state;
+            if (PlaceImg_B != null) PlaceImg_B.Enabled = state;
+            if (ChangeImg_B != null) ChangeImg_B.Enabled = state;
+            if (DeleteImg_B != null) DeleteImg_B.Enabled = state;
+        }
+
+        private void SaveImg_B_Click(object sender, EventArgs e)
+        {
+            if (SaveImg_D.ShowDialog() == DialogResult.Cancel)
+                return;
+            var path = SaveImg_D.FileName;
+            File.WriteAllBytes(path, MyMethods.ImageToByteArray(Order_Img.Image));
+            MessageBox.Show("Скачано успешно");
+        }
+
+        private void DeleteImg_B_Click(object sender, EventArgs e)
+        {
+            Order_Img.Image = new Bitmap(Order_Img.Width, Order_Img.Height);
         }
     }
 }

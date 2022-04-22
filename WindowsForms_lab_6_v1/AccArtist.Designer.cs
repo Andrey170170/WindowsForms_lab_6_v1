@@ -54,6 +54,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.Orders_P = new System.Windows.Forms.TabPage();
             this.Portfolio_ImL = new System.Windows.Forms.ImageList(this.components);
+            this.Add_B = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.Profile_P.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Profile_SpC)).BeginInit();
@@ -109,6 +110,7 @@
             // 
             // Profile_SpC.Panel2
             // 
+            this.Profile_SpC.Panel2.Controls.Add(this.Add_B);
             this.Profile_SpC.Panel2.Controls.Add(this.Update_B);
             this.Profile_SpC.Panel2.Controls.Add(this.Portfolio_LV);
             this.Profile_SpC.Panel2.Controls.Add(this.label6);
@@ -300,6 +302,16 @@
             this.Portfolio_ImL.ImageSize = new System.Drawing.Size(16, 16);
             this.Portfolio_ImL.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // Add_B
+            // 
+            this.Add_B.Location = new System.Drawing.Point(51, 74);
+            this.Add_B.Name = "Add_B";
+            this.Add_B.Size = new System.Drawing.Size(75, 23);
+            this.Add_B.TabIndex = 4;
+            this.Add_B.Text = "Добавить";
+            this.Add_B.UseVisualStyleBackColor = true;
+            this.Add_B.Click += new System.EventHandler(this.Add_B_Click);
+            // 
             // AccArtist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,6 +320,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "AccArtist";
             this.Text = "AccArtist";
+            this.Activated += new System.EventHandler(this.Update_B_Click);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AccArtist_FormClosed);
             this.tabControl1.ResumeLayout(false);
             this.Profile_P.ResumeLayout(false);
@@ -348,5 +361,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ImageList Portfolio_ImL;
         private System.Windows.Forms.Button Update_B;
+        private System.Windows.Forms.Button Add_B;
     }
 }
