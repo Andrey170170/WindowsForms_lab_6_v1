@@ -22,6 +22,7 @@
         <AssociationConnector Association="OAIP_6_v1Model.FK__Orders__ORD_ST_I__300424B4" ManuallyRouted="false" />
         <AssociationConnector Association="OAIP_6_v1Model.FK__OrdersInP__OIP_O__36B12243" ManuallyRouted="false" />
         <AssociationConnector Association="OAIP_6_v1Model.FK__Portfolio__POR_O__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="OAIP_6_v1Model.FK__Orders__ORD_Cust__797309D9" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

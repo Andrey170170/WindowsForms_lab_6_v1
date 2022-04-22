@@ -79,7 +79,13 @@
     <Compile Include="Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="MyHash.cs" />
+    <Compile Include="MyMethods.cs" />
+    <Compile Include="OrderEditing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderEditing.Designer.cs">
+      <DependentUpon>OrderEditing.cs</DependentUpon>
+    </Compile>
     <Compile Include="SignIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AccCustomer.resx">
       <DependentUpon>AccCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderEditing.resx">
+      <DependentUpon>OrderEditing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SignIn.resx">
       <DependentUpon>SignIn.cs</DependentUpon>

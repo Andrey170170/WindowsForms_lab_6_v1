@@ -47,7 +47,7 @@ namespace WindowsForms_lab_6_v1
                     }
                     db.Accounts.Add(new Account(
                         Login_TB.Text,
-                        MyHash.GetHashString(Password_TB.Text),
+                        MyMethods.GetHashString(Password_TB.Text),
                         Role_CB.SelectedItem.ToString()));
                     db.SaveChanges();
                     MessageBox.Show($"User {Login_TB.Text} registered successfully");

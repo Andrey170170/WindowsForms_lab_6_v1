@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OAIP_6_v1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OAIP_6_v1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="AC_Account_ID" />
           </Key>
           <Property Name="AC_Account_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AC_Login" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="AC_Password" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="AC_Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="AC_Role" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Artists">
@@ -36,8 +36,10 @@
           </Key>
           <Property Name="ORD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ORD_AC_Account_ID" Type="int" />
+          <Property Name="ORD_Customer_ID" Type="int" />
           <Property Name="ORD_ST_ID" Type="int" />
           <Property Name="ORD_Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ORD_Picture" Type="image" Nullable="false" />
           <Property Name="ORD_Description" Type="ntext" Nullable="false" />
           <Property Name="ORD_Cost" Type="int" Nullable="false" />
         </EntityType>
@@ -110,6 +112,18 @@
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="ORD_AC_Account_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__ORD_Cust__797309D9">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CUS_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ORD_Customer_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -237,6 +251,10 @@
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK__Orders__ORD_Cust__797309D9" Association="Self.FK__Orders__ORD_Cust__797309D9">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
           <AssociationSet Name="FK__Orders__ORD_ST_I__300424B4" Association="Self.FK__Orders__ORD_ST_I__300424B4">
             <End Role="Statuses" EntitySet="Statuses" />
             <End Role="Orders" EntitySet="Orders" />
@@ -262,8 +280,7 @@
             <End Role="Portfolios" EntitySet="Portfolios" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OAIP_6_v1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -273,7 +290,7 @@
           </Key>
           <Property Name="AC_Account_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AC_Login" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AC_Password" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AC_Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AC_Role" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Artist" Relationship="Self.FK__Artists__ART_AC___276EDEB3" FromRole="Accounts" ToRole="Artists" />
           <NavigationProperty Name="Customer" Relationship="Self.FK__Customers__CUS_A__2A4B4B5E" FromRole="Accounts" ToRole="Customers" />
@@ -299,6 +316,7 @@
           <Property Name="CUS_Age" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__Customers__CUS_A__2A4B4B5E" FromRole="Customers" ToRole="Accounts" />
           <NavigationProperty Name="OrdersInProgresses" Relationship="Self.FK__OrdersInP__OIP_C__37A5467C" FromRole="Customers" ToRole="OrdersInProgress" />
+          <NavigationProperty Name="Orders" Relationship="OAIP_6_v1Model.FK__Orders__ORD_Cust__797309D9" FromRole="Customer" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -314,6 +332,9 @@
           <NavigationProperty Name="Status" Relationship="Self.FK__Orders__ORD_ST_I__300424B4" FromRole="Orders" ToRole="Statuses" />
           <NavigationProperty Name="OrdersInProgress" Relationship="Self.FK__OrdersInP__OIP_O__36B12243" FromRole="Orders" ToRole="OrdersInProgress" />
           <NavigationProperty Name="Portfolios" Relationship="Self.FK__Portfolio__POR_O__33D4B598" FromRole="Orders" ToRole="Portfolios" />
+          <Property Name="ORD_Picture" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ORD_Customer_ID" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="OAIP_6_v1Model.FK__Orders__ORD_Cust__797309D9" FromRole="Order" ToRole="Customer" />
         </EntityType>
         <EntityType Name="OrdersInProgress">
           <Key>
@@ -540,6 +561,10 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK__Orders__ORD_Cust__797309D9" Association="OAIP_6_v1Model.FK__Orders__ORD_Cust__797309D9">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -552,6 +577,18 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <Association Name="FK__Orders__ORD_Cust__797309D9">
+          <End Type="OAIP_6_v1Model.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="OAIP_6_v1Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CUS_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ORD_Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -589,6 +626,8 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="OAIP_6_v1Model.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="ORD_Customer_ID" ColumnName="ORD_Customer_ID" />
+                <ScalarProperty Name="ORD_Picture" ColumnName="ORD_Picture" />
                 <ScalarProperty Name="ORD_ID" ColumnName="ORD_ID" />
                 <ScalarProperty Name="ORD_AC_Account_ID" ColumnName="ORD_AC_Account_ID" />
                 <ScalarProperty Name="ORD_ST_ID" ColumnName="ORD_ST_ID" />

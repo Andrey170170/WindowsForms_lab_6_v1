@@ -25,6 +25,7 @@ namespace WindowsForms_lab_6_v1
         public Customer()
         {
             this.OrdersInProgresses = new HashSet<OrdersInProgress>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int CUS_AC_Account_ID { get; set; }
@@ -34,5 +35,7 @@ namespace WindowsForms_lab_6_v1
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrdersInProgress> OrdersInProgresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

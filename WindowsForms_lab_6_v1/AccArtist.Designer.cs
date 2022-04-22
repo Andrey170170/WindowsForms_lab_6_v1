@@ -28,9 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Profile_P = new System.Windows.Forms.TabPage();
             this.Profile_SpC = new System.Windows.Forms.SplitContainer();
+            this.Exit_B = new System.Windows.Forms.Button();
+            this.Error_L = new System.Windows.Forms.Label();
+            this.Password_CB = new System.Windows.Forms.CheckBox();
             this.Age_TB = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.Cancel_B = new System.Windows.Forms.Button();
@@ -42,14 +46,19 @@
             this.Login_TB = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.Update_B = new System.Windows.Forms.Button();
+            this.Portfolio_LV = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label6 = new System.Windows.Forms.Label();
             this.Orders_P = new System.Windows.Forms.TabPage();
-            this.Password_CB = new System.Windows.Forms.CheckBox();
-            this.Error_L = new System.Windows.Forms.Label();
-            this.Exit_B = new System.Windows.Forms.Button();
+            this.Portfolio_ImL = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1.SuspendLayout();
             this.Profile_P.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Profile_SpC)).BeginInit();
             this.Profile_SpC.Panel1.SuspendLayout();
+            this.Profile_SpC.Panel2.SuspendLayout();
             this.Profile_SpC.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,9 +106,45 @@
             this.Profile_SpC.Panel1.Controls.Add(this.Login_TB);
             this.Profile_SpC.Panel1.Controls.Add(this.label2);
             this.Profile_SpC.Panel1.Controls.Add(this.label1);
+            // 
+            // Profile_SpC.Panel2
+            // 
+            this.Profile_SpC.Panel2.Controls.Add(this.Update_B);
+            this.Profile_SpC.Panel2.Controls.Add(this.Portfolio_LV);
+            this.Profile_SpC.Panel2.Controls.Add(this.label6);
             this.Profile_SpC.Size = new System.Drawing.Size(1008, 756);
             this.Profile_SpC.SplitterDistance = 451;
             this.Profile_SpC.TabIndex = 0;
+            // 
+            // Exit_B
+            // 
+            this.Exit_B.Location = new System.Drawing.Point(143, 367);
+            this.Exit_B.Name = "Exit_B";
+            this.Exit_B.Size = new System.Drawing.Size(136, 37);
+            this.Exit_B.TabIndex = 12;
+            this.Exit_B.Text = "Выйти";
+            this.Exit_B.UseVisualStyleBackColor = true;
+            this.Exit_B.Click += new System.EventHandler(this.Exit_B_Click);
+            // 
+            // Error_L
+            // 
+            this.Error_L.AutoSize = true;
+            this.Error_L.Location = new System.Drawing.Point(73, 298);
+            this.Error_L.Name = "Error_L";
+            this.Error_L.Size = new System.Drawing.Size(35, 13);
+            this.Error_L.TabIndex = 11;
+            this.Error_L.Text = "label6";
+            // 
+            // Password_CB
+            // 
+            this.Password_CB.AutoSize = true;
+            this.Password_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Password_CB.Location = new System.Drawing.Point(380, 164);
+            this.Password_CB.Name = "Password_CB";
+            this.Password_CB.Size = new System.Drawing.Size(15, 14);
+            this.Password_CB.TabIndex = 6;
+            this.Password_CB.UseVisualStyleBackColor = true;
+            this.Password_CB.CheckedChanged += new System.EventHandler(this.Password_CB_CheckedChanged);
             // 
             // Age_TB
             // 
@@ -204,6 +249,41 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Профиль";
             // 
+            // Update_B
+            // 
+            this.Update_B.Location = new System.Drawing.Point(444, 74);
+            this.Update_B.Name = "Update_B";
+            this.Update_B.Size = new System.Drawing.Size(75, 23);
+            this.Update_B.TabIndex = 3;
+            this.Update_B.Text = "Обновить";
+            this.Update_B.UseVisualStyleBackColor = true;
+            this.Update_B.Click += new System.EventHandler(this.Update_B_Click);
+            // 
+            // Portfolio_LV
+            // 
+            this.Portfolio_LV.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.Portfolio_LV.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.Portfolio_LV.HideSelection = false;
+            this.Portfolio_LV.Location = new System.Drawing.Point(51, 103);
+            this.Portfolio_LV.Name = "Portfolio_LV";
+            this.Portfolio_LV.Size = new System.Drawing.Size(469, 566);
+            this.Portfolio_LV.TabIndex = 2;
+            this.Portfolio_LV.UseCompatibleStateImageBehavior = false;
+            this.Portfolio_LV.Click += new System.EventHandler(this.Portfolio_LV_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("MV Boli", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(121, 20);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(317, 63);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Портфолио";
+            // 
             // Orders_P
             // 
             this.Orders_P.Location = new System.Drawing.Point(4, 22);
@@ -214,35 +294,11 @@
             this.Orders_P.Text = "Заказы";
             this.Orders_P.UseVisualStyleBackColor = true;
             // 
-            // Password_CB
+            // Portfolio_ImL
             // 
-            this.Password_CB.AutoSize = true;
-            this.Password_CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Password_CB.Location = new System.Drawing.Point(380, 164);
-            this.Password_CB.Name = "Password_CB";
-            this.Password_CB.Size = new System.Drawing.Size(15, 14);
-            this.Password_CB.TabIndex = 6;
-            this.Password_CB.UseVisualStyleBackColor = true;
-            this.Password_CB.CheckedChanged += new System.EventHandler(this.Password_CB_CheckedChanged);
-            // 
-            // Error_L
-            // 
-            this.Error_L.AutoSize = true;
-            this.Error_L.Location = new System.Drawing.Point(73, 298);
-            this.Error_L.Name = "Error_L";
-            this.Error_L.Size = new System.Drawing.Size(35, 13);
-            this.Error_L.TabIndex = 11;
-            this.Error_L.Text = "label6";
-            // 
-            // Exit_B
-            // 
-            this.Exit_B.Location = new System.Drawing.Point(143, 367);
-            this.Exit_B.Name = "Exit_B";
-            this.Exit_B.Size = new System.Drawing.Size(136, 37);
-            this.Exit_B.TabIndex = 12;
-            this.Exit_B.Text = "Выйти";
-            this.Exit_B.UseVisualStyleBackColor = true;
-            this.Exit_B.Click += new System.EventHandler(this.Exit_B_Click);
+            this.Portfolio_ImL.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.Portfolio_ImL.ImageSize = new System.Drawing.Size(16, 16);
+            this.Portfolio_ImL.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // AccArtist
             // 
@@ -257,6 +313,8 @@
             this.Profile_P.ResumeLayout(false);
             this.Profile_SpC.Panel1.ResumeLayout(false);
             this.Profile_SpC.Panel1.PerformLayout();
+            this.Profile_SpC.Panel2.ResumeLayout(false);
+            this.Profile_SpC.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Profile_SpC)).EndInit();
             this.Profile_SpC.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -283,5 +341,12 @@
         private System.Windows.Forms.CheckBox Password_CB;
         private System.Windows.Forms.Label Error_L;
         private System.Windows.Forms.Button Exit_B;
+        private System.Windows.Forms.ListView Portfolio_LV;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ImageList Portfolio_ImL;
+        private System.Windows.Forms.Button Update_B;
     }
 }
