@@ -1,0 +1,684 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OAIP_6_v1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="AC_Account_ID" />
+          </Key>
+          <Property Name="AC_Account_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AC_Login" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="AC_Password" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="AC_Role" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Artists">
+          <Key>
+            <PropertyRef Name="ART_AC_Account_ID" />
+          </Key>
+          <Property Name="ART_AC_Account_ID" Type="int" Nullable="false" />
+          <Property Name="ART_FullName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ART_Age" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CUS_AC_Account_ID" />
+          </Key>
+          <Property Name="CUS_AC_Account_ID" Type="int" Nullable="false" />
+          <Property Name="CUS_FullName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CUS_Age" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ORD_ID" />
+          </Key>
+          <Property Name="ORD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORD_AC_Account_ID" Type="int" />
+          <Property Name="ORD_ST_ID" Type="int" />
+          <Property Name="ORD_Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ORD_Description" Type="ntext" Nullable="false" />
+          <Property Name="ORD_Cost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrdersInProgress">
+          <Key>
+            <PropertyRef Name="OIP_ORD_ID" />
+          </Key>
+          <Property Name="OIP_ORD_ID" Type="int" Nullable="false" />
+          <Property Name="OIP_Cus_ID" Type="int" />
+          <Property Name="OIP_ART_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Portfolios">
+          <Key>
+            <PropertyRef Name="POR_ART_ID" />
+          </Key>
+          <Property Name="POR_ART_ID" Type="int" Nullable="false" />
+          <Property Name="POR_ORD_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="ST_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ST_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__Artists__ART_AC___276EDEB3">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Artists">
+              <PropertyRef Name="ART_AC_Account_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customers__CUS_A__2A4B4B5E">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="CUS_AC_Account_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__ORD_AC_A__2F10007B">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ORD_AC_Account_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__ORD_ST_I__300424B4">
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ORD_ST_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdersInP__OIP_A__38996AB5">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+          <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="ART_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="OrdersInProgress">
+              <PropertyRef Name="OIP_ART_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdersInP__OIP_C__37A5467C">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CUS_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="OrdersInProgress">
+              <PropertyRef Name="OIP_Cus_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdersInP__OIP_O__36B12243">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ORD_ID" />
+            </Principal>
+            <Dependent Role="OrdersInProgress">
+              <PropertyRef Name="OIP_ORD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Portfolio__POR_A__32E0915F">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="Portfolios" Type="Self.Portfolios" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="ART_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Portfolios">
+              <PropertyRef Name="POR_ART_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Portfolio__POR_O__33D4B598">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Portfolios" Type="Self.Portfolios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ORD_ID" />
+            </Principal>
+            <Dependent Role="Portfolios">
+              <PropertyRef Name="POR_ORD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="OAIP_6_v1ModelStoreContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdersInProgress" EntityType="Self.OrdersInProgress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Portfolios" EntityType="Self.Portfolios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Artists__ART_AC___276EDEB3" Association="Self.FK__Artists__ART_AC___276EDEB3">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Artists" EntitySet="Artists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customers__CUS_A__2A4B4B5E" Association="Self.FK__Customers__CUS_A__2A4B4B5E">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__ORD_AC_A__2F10007B" Association="Self.FK__Orders__ORD_AC_A__2F10007B">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__ORD_ST_I__300424B4" Association="Self.FK__Orders__ORD_ST_I__300424B4">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdersInP__OIP_A__38996AB5" Association="Self.FK__OrdersInP__OIP_A__38996AB5">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="OrdersInProgress" EntitySet="OrdersInProgress" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdersInP__OIP_C__37A5467C" Association="Self.FK__OrdersInP__OIP_C__37A5467C">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="OrdersInProgress" EntitySet="OrdersInProgress" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdersInP__OIP_O__36B12243" Association="Self.FK__OrdersInP__OIP_O__36B12243">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrdersInProgress" EntitySet="OrdersInProgress" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Portfolio__POR_A__32E0915F" Association="Self.FK__Portfolio__POR_A__32E0915F">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Portfolios" EntitySet="Portfolios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Portfolio__POR_O__33D4B598" Association="Self.FK__Portfolio__POR_O__33D4B598">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Portfolios" EntitySet="Portfolios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OAIP_6_v1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AC_Account_ID" />
+          </Key>
+          <Property Name="AC_Account_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AC_Login" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AC_Password" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AC_Role" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK__Artists__ART_AC___276EDEB3" FromRole="Accounts" ToRole="Artists" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Customers__CUS_A__2A4B4B5E" FromRole="Accounts" ToRole="Customers" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__ORD_AC_A__2F10007B" FromRole="Accounts" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ART_AC_Account_ID" />
+          </Key>
+          <Property Name="ART_AC_Account_ID" Type="Int32" Nullable="false" />
+          <Property Name="ART_FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ART_Age" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Artists__ART_AC___276EDEB3" FromRole="Artists" ToRole="Accounts" />
+          <NavigationProperty Name="OrdersInProgresses" Relationship="Self.FK__OrdersInP__OIP_A__38996AB5" FromRole="Artists" ToRole="OrdersInProgress" />
+          <NavigationProperty Name="Portfolio" Relationship="Self.FK__Portfolio__POR_A__32E0915F" FromRole="Artists" ToRole="Portfolios" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CUS_AC_Account_ID" />
+          </Key>
+          <Property Name="CUS_AC_Account_ID" Type="Int32" Nullable="false" />
+          <Property Name="CUS_FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CUS_Age" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Customers__CUS_A__2A4B4B5E" FromRole="Customers" ToRole="Accounts" />
+          <NavigationProperty Name="OrdersInProgresses" Relationship="Self.FK__OrdersInP__OIP_C__37A5467C" FromRole="Customers" ToRole="OrdersInProgress" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ORD_ID" />
+          </Key>
+          <Property Name="ORD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORD_AC_Account_ID" Type="Int32" />
+          <Property Name="ORD_ST_ID" Type="Int32" />
+          <Property Name="ORD_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ORD_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ORD_Cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Orders__ORD_AC_A__2F10007B" FromRole="Orders" ToRole="Accounts" />
+          <NavigationProperty Name="Status" Relationship="Self.FK__Orders__ORD_ST_I__300424B4" FromRole="Orders" ToRole="Statuses" />
+          <NavigationProperty Name="OrdersInProgress" Relationship="Self.FK__OrdersInP__OIP_O__36B12243" FromRole="Orders" ToRole="OrdersInProgress" />
+          <NavigationProperty Name="Portfolios" Relationship="Self.FK__Portfolio__POR_O__33D4B598" FromRole="Orders" ToRole="Portfolios" />
+        </EntityType>
+        <EntityType Name="OrdersInProgress">
+          <Key>
+            <PropertyRef Name="OIP_ORD_ID" />
+          </Key>
+          <Property Name="OIP_ORD_ID" Type="Int32" Nullable="false" />
+          <Property Name="OIP_Cus_ID" Type="Int32" />
+          <Property Name="OIP_ART_ID" Type="Int32" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK__OrdersInP__OIP_A__38996AB5" FromRole="OrdersInProgress" ToRole="Artists" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__OrdersInP__OIP_C__37A5467C" FromRole="OrdersInProgress" ToRole="Customers" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__OrdersInP__OIP_O__36B12243" FromRole="OrdersInProgress" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Portfolio">
+          <Key>
+            <PropertyRef Name="POR_ART_ID" />
+          </Key>
+          <Property Name="POR_ART_ID" Type="Int32" Nullable="false" />
+          <Property Name="POR_ORD_ID" Type="Int32" />
+          <NavigationProperty Name="Artist" Relationship="Self.FK__Portfolio__POR_A__32E0915F" FromRole="Portfolios" ToRole="Artists" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__Portfolio__POR_O__33D4B598" FromRole="Portfolios" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ST_ID" />
+          </Key>
+          <Property Name="ST_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ST_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__ORD_ST_I__300424B4" FromRole="Statuses" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Artists__ART_AC___276EDEB3">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Artists" Type="Self.Artist" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Artists">
+              <PropertyRef Name="ART_AC_Account_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customers__CUS_A__2A4B4B5E">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="CUS_AC_Account_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__ORD_AC_A__2F10007B">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ORD_AC_Account_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdersInP__OIP_A__38996AB5">
+          <End Role="Artists" Type="Self.Artist" Multiplicity="0..1" />
+          <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="ART_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="OrdersInProgress">
+              <PropertyRef Name="OIP_ART_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Portfolio__POR_A__32E0915F">
+          <End Role="Artists" Type="Self.Artist" Multiplicity="1" />
+          <End Role="Portfolios" Type="Self.Portfolio" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="ART_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Portfolios">
+              <PropertyRef Name="POR_ART_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdersInP__OIP_C__37A5467C">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CUS_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="OrdersInProgress">
+              <PropertyRef Name="OIP_Cus_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__ORD_ST_I__300424B4">
+          <End Role="Statuses" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="ST_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ORD_ST_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrdersInP__OIP_O__36B12243">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ORD_ID" />
+            </Principal>
+            <Dependent Role="OrdersInProgress">
+              <PropertyRef Name="OIP_ORD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Portfolio__POR_O__33D4B598">
+          <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Portfolios" Type="Self.Portfolio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ORD_ID" />
+            </Principal>
+            <Dependent Role="Portfolios">
+              <PropertyRef Name="POR_ORD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OAIP_6_v1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Artists" EntityType="Self.Artist" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrdersInProgresses" EntityType="Self.OrdersInProgress" />
+          <EntitySet Name="Portfolios" EntityType="Self.Portfolio" />
+          <EntitySet Name="Statuses" EntityType="Self.Status" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK__Artists__ART_AC___276EDEB3" Association="Self.FK__Artists__ART_AC___276EDEB3">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Artists" EntitySet="Artists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customers__CUS_A__2A4B4B5E" Association="Self.FK__Customers__CUS_A__2A4B4B5E">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__ORD_AC_A__2F10007B" Association="Self.FK__Orders__ORD_AC_A__2F10007B">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdersInP__OIP_A__38996AB5" Association="Self.FK__OrdersInP__OIP_A__38996AB5">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="OrdersInProgress" EntitySet="OrdersInProgresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Portfolio__POR_A__32E0915F" Association="Self.FK__Portfolio__POR_A__32E0915F">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Portfolios" EntitySet="Portfolios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdersInP__OIP_C__37A5467C" Association="Self.FK__OrdersInP__OIP_C__37A5467C">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="OrdersInProgress" EntitySet="OrdersInProgresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__ORD_ST_I__300424B4" Association="Self.FK__Orders__ORD_ST_I__300424B4">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrdersInP__OIP_O__36B12243" Association="Self.FK__OrdersInP__OIP_O__36B12243">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrdersInProgress" EntitySet="OrdersInProgresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Portfolio__POR_O__33D4B598" Association="Self.FK__Portfolio__POR_O__33D4B598">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Portfolios" EntitySet="Portfolios" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(OAIP_6_v1Model.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(OAIP_6_v1Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OAIP_6_v1ModelStoreContainer" CdmEntityContainer="OAIP_6_v1Entities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="OAIP_6_v1Model.Account">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="AC_Account_ID" ColumnName="AC_Account_ID" />
+                <ScalarProperty Name="AC_Login" ColumnName="AC_Login" />
+                <ScalarProperty Name="AC_Password" ColumnName="AC_Password" />
+                <ScalarProperty Name="AC_Role" ColumnName="AC_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="OAIP_6_v1Model.Artist">
+              <MappingFragment StoreEntitySet="Artists">
+                <ScalarProperty Name="ART_AC_Account_ID" ColumnName="ART_AC_Account_ID" />
+                <ScalarProperty Name="ART_FullName" ColumnName="ART_FullName" />
+                <ScalarProperty Name="ART_Age" ColumnName="ART_Age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="OAIP_6_v1Model.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CUS_AC_Account_ID" ColumnName="CUS_AC_Account_ID" />
+                <ScalarProperty Name="CUS_FullName" ColumnName="CUS_FullName" />
+                <ScalarProperty Name="CUS_Age" ColumnName="CUS_Age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="OAIP_6_v1Model.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="ORD_ID" ColumnName="ORD_ID" />
+                <ScalarProperty Name="ORD_AC_Account_ID" ColumnName="ORD_AC_Account_ID" />
+                <ScalarProperty Name="ORD_ST_ID" ColumnName="ORD_ST_ID" />
+                <ScalarProperty Name="ORD_Name" ColumnName="ORD_Name" />
+                <ScalarProperty Name="ORD_Description" ColumnName="ORD_Description" />
+                <ScalarProperty Name="ORD_Cost" ColumnName="ORD_Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdersInProgresses">
+            <EntityTypeMapping TypeName="OAIP_6_v1Model.OrdersInProgress">
+              <MappingFragment StoreEntitySet="OrdersInProgress">
+                <ScalarProperty Name="OIP_ORD_ID" ColumnName="OIP_ORD_ID" />
+                <ScalarProperty Name="OIP_Cus_ID" ColumnName="OIP_Cus_ID" />
+                <ScalarProperty Name="OIP_ART_ID" ColumnName="OIP_ART_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Portfolios">
+            <EntityTypeMapping TypeName="OAIP_6_v1Model.Portfolio">
+              <MappingFragment StoreEntitySet="Portfolios">
+                <ScalarProperty Name="POR_ART_ID" ColumnName="POR_ART_ID" />
+                <ScalarProperty Name="POR_ORD_ID" ColumnName="POR_ORD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Statuses">
+            <EntityTypeMapping TypeName="OAIP_6_v1Model.Status">
+              <MappingFragment StoreEntitySet="Statuses">
+                <ScalarProperty Name="ST_ID" ColumnName="ST_ID" />
+                <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="OAIP_6_v1Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="OAIP_6_v1Model.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="OAIP_6_v1Model.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="OAIP_6_v1Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="OAIP_6_v1Model.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OAIP_6_v1Model.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="OAIP_6_v1Model.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OAIP_6_v1Model.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="OAIP_6_v1Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OAIP_6_v1Model.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
