@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="OAIP_6_v1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="lab_OAIP_6_v1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="AC_Account_ID" />
@@ -35,9 +35,8 @@
             <PropertyRef Name="ORD_ID" />
           </Key>
           <Property Name="ORD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ORD_AC_Account_ID" Type="int" />
-          <Property Name="ORD_Customer_ID" Type="int" />
-          <Property Name="ORD_ST_ID" Type="int" />
+          <Property Name="ORD_AC_Account_ID" Type="int" Nullable="false" />
+          <Property Name="ORD_ST_ID" Type="int" Nullable="false" />
           <Property Name="ORD_Name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="ORD_Picture" Type="image" Nullable="false" />
           <Property Name="ORD_Description" Type="ntext" Nullable="false" />
@@ -53,10 +52,12 @@
         </EntityType>
         <EntityType Name="Portfolios">
           <Key>
-            <PropertyRef Name="POR_ART_ID" />
+            <PropertyRef Name="POR_ID" />
           </Key>
+          <Property Name="POR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="POR_ART_ID" Type="int" Nullable="false" />
-          <Property Name="POR_ORD_ID" Type="int" />
+          <Property Name="POR_ORD_ID" Type="int" Nullable="false" />
+          <Property Name="POR_CUS_ID" Type="int" />
         </EntityType>
         <EntityType Name="Statuses">
           <Key>
@@ -104,7 +105,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orders__ORD_AC_A__2F10007B">
-          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Accounts">
@@ -115,20 +116,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Orders__ORD_Cust__797309D9">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CUS_AC_Account_ID" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="ORD_Customer_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Orders__ORD_ST_I__300424B4">
-          <End Role="Statuses" Type="Self.Statuses" Multiplicity="0..1" />
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Statuses">
@@ -177,7 +166,7 @@
         </Association>
         <Association Name="FK__Portfolio__POR_A__32E0915F">
           <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
-          <End Role="Portfolios" Type="Self.Portfolios" Multiplicity="0..1" />
+          <End Role="Portfolios" Type="Self.Portfolios" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
               <PropertyRef Name="ART_AC_Account_ID" />
@@ -187,8 +176,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Portfolio__POR_C__01142BA1">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Portfolios" Type="Self.Portfolios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CUS_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Portfolios">
+              <PropertyRef Name="POR_CUS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Portfolio__POR_O__33D4B598">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="Portfolios" Type="Self.Portfolios" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
@@ -230,7 +231,7 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="OAIP_6_v1ModelStoreContainer">
+        <EntityContainer Name="lab_OAIP_6_v1ModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
@@ -249,10 +250,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__Orders__ORD_AC_A__2F10007B" Association="Self.FK__Orders__ORD_AC_A__2F10007B">
             <End Role="Accounts" EntitySet="Accounts" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__ORD_Cust__797309D9" Association="Self.FK__Orders__ORD_Cust__797309D9">
-            <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK__Orders__ORD_ST_I__300424B4" Association="Self.FK__Orders__ORD_ST_I__300424B4">
@@ -275,6 +272,10 @@
             <End Role="Artists" EntitySet="Artists" />
             <End Role="Portfolios" EntitySet="Portfolios" />
           </AssociationSet>
+          <AssociationSet Name="FK__Portfolio__POR_C__01142BA1" Association="Self.FK__Portfolio__POR_C__01142BA1">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Portfolios" EntitySet="Portfolios" />
+          </AssociationSet>
           <AssociationSet Name="FK__Portfolio__POR_O__33D4B598" Association="Self.FK__Portfolio__POR_O__33D4B598">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Portfolios" EntitySet="Portfolios" />
@@ -283,7 +284,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="OAIP_6_v1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="lab_OAIP_6_v1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AC_Account_ID" />
@@ -316,25 +317,23 @@
           <Property Name="CUS_Age" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__Customers__CUS_A__2A4B4B5E" FromRole="Customers" ToRole="Accounts" />
           <NavigationProperty Name="OrdersInProgresses" Relationship="Self.FK__OrdersInP__OIP_C__37A5467C" FromRole="Customers" ToRole="OrdersInProgress" />
-          <NavigationProperty Name="Orders" Relationship="OAIP_6_v1Model.FK__Orders__ORD_Cust__797309D9" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Portfolios" Relationship="Self.FK__Portfolio__POR_C__01142BA1" FromRole="Customers" ToRole="Portfolios" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="ORD_ID" />
           </Key>
           <Property Name="ORD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ORD_AC_Account_ID" Type="Int32" />
-          <Property Name="ORD_ST_ID" Type="Int32" />
+          <Property Name="ORD_AC_Account_ID" Type="Int32" Nullable="false" />
+          <Property Name="ORD_ST_ID" Type="Int32" Nullable="false" />
           <Property Name="ORD_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ORD_Picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ORD_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ORD_Cost" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__Orders__ORD_AC_A__2F10007B" FromRole="Orders" ToRole="Accounts" />
           <NavigationProperty Name="Status" Relationship="Self.FK__Orders__ORD_ST_I__300424B4" FromRole="Orders" ToRole="Statuses" />
           <NavigationProperty Name="OrdersInProgress" Relationship="Self.FK__OrdersInP__OIP_O__36B12243" FromRole="Orders" ToRole="OrdersInProgress" />
           <NavigationProperty Name="Portfolios" Relationship="Self.FK__Portfolio__POR_O__33D4B598" FromRole="Orders" ToRole="Portfolios" />
-          <Property Name="ORD_Picture" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="ORD_Customer_ID" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="OAIP_6_v1Model.FK__Orders__ORD_Cust__797309D9" FromRole="Order" ToRole="Customer" />
         </EntityType>
         <EntityType Name="OrdersInProgress">
           <Key>
@@ -349,12 +348,15 @@
         </EntityType>
         <EntityType Name="Portfolio">
           <Key>
-            <PropertyRef Name="POR_ART_ID" />
+            <PropertyRef Name="POR_ID" />
           </Key>
           <Property Name="POR_ART_ID" Type="Int32" Nullable="false" />
-          <Property Name="POR_ORD_ID" Type="Int32" />
+          <Property Name="POR_ORD_ID" Type="Int32" Nullable="false" />
+          <Property Name="POR_CUS_ID" Type="Int32" />
           <NavigationProperty Name="Artist" Relationship="Self.FK__Portfolio__POR_A__32E0915F" FromRole="Portfolios" ToRole="Artists" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Portfolio__POR_C__01142BA1" FromRole="Portfolios" ToRole="Customers" />
           <NavigationProperty Name="Order" Relationship="Self.FK__Portfolio__POR_O__33D4B598" FromRole="Portfolios" ToRole="Orders" />
+          <Property Name="POR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -403,7 +405,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orders__ORD_AC_A__2F10007B">
-          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Account" Multiplicity="1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Accounts">
@@ -428,7 +430,7 @@
         </Association>
         <Association Name="FK__Portfolio__POR_A__32E0915F">
           <End Role="Artists" Type="Self.Artist" Multiplicity="1" />
-          <End Role="Portfolios" Type="Self.Portfolio" Multiplicity="0..1" />
+          <End Role="Portfolios" Type="Self.Portfolio" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
               <PropertyRef Name="ART_AC_Account_ID" />
@@ -450,8 +452,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Portfolio__POR_C__01142BA1">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Portfolios" Type="Self.Portfolio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CUS_AC_Account_ID" />
+            </Principal>
+            <Dependent Role="Portfolios">
+              <PropertyRef Name="POR_CUS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Orders__ORD_ST_I__300424B4">
-          <End Role="Statuses" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Statuses" Type="Self.Status" Multiplicity="1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Statuses">
@@ -475,7 +489,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Portfolio__POR_O__33D4B598">
-          <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
           <End Role="Portfolios" Type="Self.Portfolio" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
@@ -486,7 +500,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="OAIP_6_v1Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="lab_OAIP_6_v1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="Artists" EntityType="Self.Artist" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
@@ -519,6 +533,10 @@
             <End Role="Customers" EntitySet="Customers" />
             <End Role="OrdersInProgress" EntitySet="OrdersInProgresses" />
           </AssociationSet>
+          <AssociationSet Name="FK__Portfolio__POR_C__01142BA1" Association="Self.FK__Portfolio__POR_C__01142BA1">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Portfolios" EntitySet="Portfolios" />
+          </AssociationSet>
           <AssociationSet Name="FK__Orders__ORD_ST_I__300424B4" Association="Self.FK__Orders__ORD_ST_I__300424B4">
             <End Role="Statuses" EntitySet="Statuses" />
             <End Role="Orders" EntitySet="Orders" />
@@ -547,11 +565,11 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(OAIP_6_v1Model.sp_helpdiagramdefinition_Result)">
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(lab_OAIP_6_v1Model.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(OAIP_6_v1Model.sp_helpdiagrams_Result)">
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(lab_OAIP_6_v1Model.sp_helpdiagrams_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -561,10 +579,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <AssociationSet Name="FK__Orders__ORD_Cust__797309D9" Association="OAIP_6_v1Model.FK__Orders__ORD_Cust__797309D9">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -577,26 +591,14 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <Association Name="FK__Orders__ORD_Cust__797309D9">
-          <End Type="OAIP_6_v1Model.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="OAIP_6_v1Model.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CUS_AC_Account_ID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="ORD_Customer_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="OAIP_6_v1ModelStoreContainer" CdmEntityContainer="OAIP_6_v1Entities">
+        <EntityContainerMapping StorageEntityContainer="lab_OAIP_6_v1ModelStoreContainer" CdmEntityContainer="lab_OAIP_6_v1Entities">
           <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="OAIP_6_v1Model.Account">
+            <EntityTypeMapping TypeName="lab_OAIP_6_v1Model.Account">
               <MappingFragment StoreEntitySet="Accounts">
                 <ScalarProperty Name="AC_Account_ID" ColumnName="AC_Account_ID" />
                 <ScalarProperty Name="AC_Login" ColumnName="AC_Login" />
@@ -606,7 +608,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Artists">
-            <EntityTypeMapping TypeName="OAIP_6_v1Model.Artist">
+            <EntityTypeMapping TypeName="lab_OAIP_6_v1Model.Artist">
               <MappingFragment StoreEntitySet="Artists">
                 <ScalarProperty Name="ART_AC_Account_ID" ColumnName="ART_AC_Account_ID" />
                 <ScalarProperty Name="ART_FullName" ColumnName="ART_FullName" />
@@ -615,7 +617,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="OAIP_6_v1Model.Customer">
+            <EntityTypeMapping TypeName="lab_OAIP_6_v1Model.Customer">
               <MappingFragment StoreEntitySet="Customers">
                 <ScalarProperty Name="CUS_AC_Account_ID" ColumnName="CUS_AC_Account_ID" />
                 <ScalarProperty Name="CUS_FullName" ColumnName="CUS_FullName" />
@@ -624,21 +626,20 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="OAIP_6_v1Model.Order">
+            <EntityTypeMapping TypeName="lab_OAIP_6_v1Model.Order">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="ORD_Customer_ID" ColumnName="ORD_Customer_ID" />
-                <ScalarProperty Name="ORD_Picture" ColumnName="ORD_Picture" />
                 <ScalarProperty Name="ORD_ID" ColumnName="ORD_ID" />
                 <ScalarProperty Name="ORD_AC_Account_ID" ColumnName="ORD_AC_Account_ID" />
                 <ScalarProperty Name="ORD_ST_ID" ColumnName="ORD_ST_ID" />
                 <ScalarProperty Name="ORD_Name" ColumnName="ORD_Name" />
+                <ScalarProperty Name="ORD_Picture" ColumnName="ORD_Picture" />
                 <ScalarProperty Name="ORD_Description" ColumnName="ORD_Description" />
                 <ScalarProperty Name="ORD_Cost" ColumnName="ORD_Cost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrdersInProgresses">
-            <EntityTypeMapping TypeName="OAIP_6_v1Model.OrdersInProgress">
+            <EntityTypeMapping TypeName="lab_OAIP_6_v1Model.OrdersInProgress">
               <MappingFragment StoreEntitySet="OrdersInProgress">
                 <ScalarProperty Name="OIP_ORD_ID" ColumnName="OIP_ORD_ID" />
                 <ScalarProperty Name="OIP_Cus_ID" ColumnName="OIP_Cus_ID" />
@@ -647,15 +648,17 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Portfolios">
-            <EntityTypeMapping TypeName="OAIP_6_v1Model.Portfolio">
+            <EntityTypeMapping TypeName="lab_OAIP_6_v1Model.Portfolio">
               <MappingFragment StoreEntitySet="Portfolios">
+                <ScalarProperty Name="POR_ID" ColumnName="POR_ID" />
                 <ScalarProperty Name="POR_ART_ID" ColumnName="POR_ART_ID" />
                 <ScalarProperty Name="POR_ORD_ID" ColumnName="POR_ORD_ID" />
+                <ScalarProperty Name="POR_CUS_ID" ColumnName="POR_CUS_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Statuses">
-            <EntityTypeMapping TypeName="OAIP_6_v1Model.Status">
+            <EntityTypeMapping TypeName="lab_OAIP_6_v1Model.Status">
               <MappingFragment StoreEntitySet="Statuses">
                 <ScalarProperty Name="ST_ID" ColumnName="ST_ID" />
                 <ScalarProperty Name="ST_Name" ColumnName="ST_Name" />
@@ -663,7 +666,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="OAIP_6_v1Model.sysdiagram">
+            <EntityTypeMapping TypeName="lab_OAIP_6_v1Model.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -673,20 +676,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="OAIP_6_v1Model.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="OAIP_6_v1Model.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="OAIP_6_v1Model.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="OAIP_6_v1Model.Store.sp_helpdiagramdefinition">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="lab_OAIP_6_v1Model.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="lab_OAIP_6_v1Model.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="lab_OAIP_6_v1Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="lab_OAIP_6_v1Model.Store.sp_helpdiagramdefinition">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OAIP_6_v1Model.sp_helpdiagramdefinition_Result">
+              <ComplexTypeMapping TypeName="lab_OAIP_6_v1Model.sp_helpdiagramdefinition_Result">
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="OAIP_6_v1Model.Store.sp_helpdiagrams">
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="lab_OAIP_6_v1Model.Store.sp_helpdiagrams">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OAIP_6_v1Model.sp_helpdiagrams_Result">
+              <ComplexTypeMapping TypeName="lab_OAIP_6_v1Model.sp_helpdiagrams_Result">
                 <ScalarProperty Name="Database" ColumnName="Database" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -695,8 +698,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="OAIP_6_v1Model.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="OAIP_6_v1Model.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="lab_OAIP_6_v1Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="lab_OAIP_6_v1Model.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

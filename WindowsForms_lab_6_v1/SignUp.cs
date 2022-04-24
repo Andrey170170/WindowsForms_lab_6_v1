@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsForms_lab_6_v1
@@ -39,7 +33,7 @@ namespace WindowsForms_lab_6_v1
                 {
                     throw new Exception("Chose your role");
                 }
-                using (OAIP_6_v1Entities db = new OAIP_6_v1Entities())
+                using (var db = new lab_OAIP_6_v1Entities())
                 {
                     if (db.Accounts.Count(account => account.AC_Login == Login_TB.Text) != 0)
                     {

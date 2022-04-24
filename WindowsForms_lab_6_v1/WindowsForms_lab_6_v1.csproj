@@ -58,6 +58,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="2Try.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>2Try.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="2Try.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>2Try.tt</DependentUpon>
+    </Compile>
+    <Compile Include="2Try.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>2Try.edmx</DependentUpon>
+    </Compile>
     <Compile Include="AccArtist.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,50 +86,41 @@
       <DependentUpon>AccCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Account.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
     <Compile Include="Artist.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
     <Compile Include="Customer.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>2Try.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustOrderEditing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustOrderEditing.Designer.cs">
+      <DependentUpon>CustOrderEditing.cs</DependentUpon>
     </Compile>
     <Compile Include="MyMethods.cs" />
+    <Compile Include="Order.cs">
+      <DependentUpon>2Try.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrderEditing.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="OrderEditing.Designer.cs">
       <DependentUpon>OrderEditing.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrdersInProgress.cs">
+      <DependentUpon>2Try.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Portfolio.cs">
+      <DependentUpon>2Try.tt</DependentUpon>
+    </Compile>
     <Compile Include="SignIn.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SignIn.Designer.cs">
       <DependentUpon>SignIn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Order.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OrdersInProgress.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Portfolio.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,22 +131,25 @@
       <DependentUpon>SignUp.cs</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
     <Compile Include="Status.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AccArtist.resx">
       <DependentUpon>AccArtist.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AccCustomer.resx">
       <DependentUpon>AccCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustOrderEditing.resx">
+      <DependentUpon>CustOrderEditing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderEditing.resx">
       <DependentUpon>OrderEditing.cs</DependentUpon>
@@ -160,12 +169,12 @@
     <EmbeddedResource Include="SignUp.resx">
       <DependentUpon>SignUp.cs</DependentUpon>
     </EmbeddedResource>
-    <EntityDeploy Include="Model1.edmx">
+    <EntityDeploy Include="2Try.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>2Try.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <None Include="2Try.edmx.diagram">
+      <DependentUpon>2Try.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -182,15 +191,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model1.Context.tt">
+    <Content Include="2Try.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>2Try.edmx</DependentUpon>
+      <LastGenOutput>2Try.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model1.tt">
+    <Content Include="2Try.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>2Try.edmx</DependentUpon>
+      <LastGenOutput>2Try.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

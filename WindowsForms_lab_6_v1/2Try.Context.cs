@@ -15,10 +15,10 @@ namespace WindowsForms_lab_6_v1
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class OAIP_6_v1Entities : DbContext
+    public partial class lab_OAIP_6_v1Entities : DbContext
     {
-        public OAIP_6_v1Entities()
-            : base("name=OAIP_6_v1Entities")
+        public lab_OAIP_6_v1Entities()
+            : base("name=lab_OAIP_6_v1Entities")
         {
         }
     

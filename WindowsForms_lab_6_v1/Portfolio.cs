@@ -15,9 +15,12 @@ namespace WindowsForms_lab_6_v1
     public partial class Portfolio
     {
         public int POR_ART_ID { get; set; }
-        public Nullable<int> POR_ORD_ID { get; set; }
+        public int POR_ORD_ID { get; set; }
+        public Nullable<int> POR_CUS_ID { get; set; }
+        public int POR_ID { get; set; }
     
         public virtual Artist Artist { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual Order Order { get; set; }
     }
 }

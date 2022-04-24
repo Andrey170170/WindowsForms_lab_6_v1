@@ -41,7 +41,7 @@ namespace WindowsForms_lab_6_v1
                     throw new Exception("Password is empty");
                 }
 
-                using (OAIP_6_v1Entities db = new OAIP_6_v1Entities())
+                using (var db = new lab_OAIP_6_v1Entities())
                 {
                     foreach (var account in db.Accounts)
                     {

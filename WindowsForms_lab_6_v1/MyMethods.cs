@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -16,6 +17,7 @@ namespace WindowsForms_lab_6_v1
             var byteHash = CSP.ComputeHash(bytes);
             return byteHash.Aggregate("", (current, b) => current + $"{b:x2}");
         }
+
         public static byte[] ImageToByteArray(System.Drawing.Image imageIn)
         {
             MemoryStream ms = new MemoryStream();
@@ -27,31 +29,65 @@ namespace WindowsForms_lab_6_v1
         {
             return Image.FromStream(new MemoryStream(byteArrayIn));
         }
+
         public static void UpdateLV(Account account, ImageList imageList, ListView listView)
         {
-            using (var db = new OAIP_6_v1Entities())
+            using (var db = new lab_OAIP_6_v1Entities())
             {
-                var portfolioOrders = db.Orders.Where(order => order.ORD_AC_Account_ID == account.AC_Account_ID)
+                var orders = db.Orders.Where(order => order.ORD_AC_Account_ID == account.AC_Account_ID)
                     .ToList();
                 imageList.ImageSize = new Size(64, 64);
                 imageList.Images.Clear();
-                foreach (var order in portfolioOrders)
+                foreach (var order in orders)
                 {
                     imageList.Images.Add(Image.FromStream(new MemoryStream(order.ORD_Picture)));
                 }
+
                 listView.Items.Clear();
                 listView.LargeImageList = imageList;
-                for (var i = 0; i < portfolioOrders.Count(); i++)
+                for (var i = 0; i < orders.Count(); i++)
                 {
                     listView.Items.Add(
                         new ListViewItem
                         {
-                            Text = portfolioOrders.ElementAt(i).ORD_Name,
+                            Text = orders.ElementAt(i).ORD_Name,
                             ImageIndex = i,
-                            BackColor = Color.AntiqueWhite,
-                            Tag = portfolioOrders[i]
+                            Tag = orders[i]
                         }
                     );
+                }
+            }
+        }
+
+        public static void UpdateLV(Account account, ListView listView)
+        {
+            listView.Items.Clear();
+            using (var db = new lab_OAIP_6_v1Entities())
+            {
+                var orders = db.Orders.Where(order => order.ORD_AC_Account_ID == account.AC_Account_ID)
+                    .ToList();
+                foreach (var order in orders)
+                {
+                    var item = listView.Items.Add(order.ORD_Name);
+                    item.UseItemStyleForSubItems = false;
+                    item.Tag = order;
+                    var subItemCost = item.SubItems.Add(order.ORD_Cost.ToString());
+                    var status = db.Statuses.FirstOrDefault(stat => stat.ST_ID == order.ORD_ST_ID);
+                    var subItemStatus = item.SubItems.Add(status.ST_Name);
+                    switch (status.ST_ID)
+                    {
+                        case 3:
+                            subItemStatus.ForeColor = Color.Red;
+                            break;
+                        case 4:
+                            subItemStatus.ForeColor = Color.Yellow;
+                            break;
+                        case 5:
+                            subItemStatus.ForeColor = Color.Green;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(status.ST_ID));
+                    }
                 }
             }
         }

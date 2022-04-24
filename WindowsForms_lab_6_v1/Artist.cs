@@ -20,11 +20,11 @@ namespace WindowsForms_lab_6_v1
             ART_FullName = Name;
             ART_Age = age;
         }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Artist()
         {
             this.OrdersInProgresses = new HashSet<OrdersInProgress>();
+            this.Portfolio = new HashSet<Portfolio>();
         }
     
         public int ART_AC_Account_ID { get; set; }
@@ -34,6 +34,7 @@ namespace WindowsForms_lab_6_v1
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrdersInProgress> OrdersInProgresses { get; set; }
-        public virtual Portfolio Portfolio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Portfolio> Portfolio { get; set; }
     }
 }

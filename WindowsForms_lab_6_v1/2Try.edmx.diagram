@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0d9806def8c342528a22d1852d89632e" Name="Diagram1">
+        <EntityTypeShape EntityType="lab_OAIP_6_v1Model.Account" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="lab_OAIP_6_v1Model.Artist" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="lab_OAIP_6_v1Model.Customer" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="lab_OAIP_6_v1Model.Order" Width="1.5" PointX="6" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="lab_OAIP_6_v1Model.OrdersInProgress" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="lab_OAIP_6_v1Model.Portfolio" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="lab_OAIP_6_v1Model.Status" Width="1.5" PointX="3.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="lab_OAIP_6_v1Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__Artists__ART_AC___276EDEB3" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__Customers__CUS_A__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__Orders__ORD_AC_A__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__OrdersInP__OIP_A__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__Portfolio__POR_A__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__OrdersInP__OIP_C__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__Portfolio__POR_C__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__Orders__ORD_ST_I__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__OrdersInP__OIP_O__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="lab_OAIP_6_v1Model.FK__Portfolio__POR_O__33D4B598" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

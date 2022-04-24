@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.Entity;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsForms_lab_6_v1
@@ -26,11 +19,10 @@ namespace WindowsForms_lab_6_v1
         {
             InitializeComponent();
             _account = userAccount;
-            using (var db = new OAIP_6_v1Entities())
+            using (var db = new lab_OAIP_6_v1Entities())
             {
                 _artist = db.Artists.First(art => art.ART_AC_Account_ID == userAccount.AC_Account_ID);
                 Login_TB.Text = userAccount.AC_Login;
-                Password_TB.Text = userAccount.AC_Password;
                 FullName_TB.Text = _artist.ART_FullName;
                 Age_TB.Text = _artist.ART_Age.ToString();
                 if (FullName_TB.Text == "" || Age_TB.Text == "0")
@@ -39,6 +31,7 @@ namespace WindowsForms_lab_6_v1
                     Profile_SpC.Panel2.Enabled = false;
                     Error_L.Text = "Заполните свои данные";
                 }
+
                 MyMethods.UpdateLV(_account, Portfolio_ImL, Portfolio_LV);
             }
         }
@@ -51,7 +44,7 @@ namespace WindowsForms_lab_6_v1
         private void Cancel_B_Click(object sender, EventArgs e)
         {
             Login_TB.Text = _account.AC_Login;
-            Password_TB.Text = _account.AC_Password;
+            Password_TB.Text = "";
             FullName_TB.Text = _artist.ART_FullName;
             Age_TB.Text = _artist.ART_Age.ToString();
         }
@@ -63,11 +56,6 @@ namespace WindowsForms_lab_6_v1
                 if (Login_TB.Text == "")
                 {
                     throw new Exception("Login is empty");
-                }
-
-                if (Password_TB.Text == "")
-                {
-                    throw new Exception("Password is empty");
                 }
 
                 if (FullName_TB.Text == "")
@@ -82,10 +70,12 @@ namespace WindowsForms_lab_6_v1
 
                 if (_account.AC_Login == Login_TB.Text && _account.AC_Password == Password_TB.Text &&
                     _artist.ART_FullName == FullName_TB.Text && _artist.ART_Age == int.Parse(Age_TB.Text)) return;
-                using (var db = new OAIP_6_v1Entities())
+                using (var db = new lab_OAIP_6_v1Entities())
                 {
                     _account.AC_Login = Login_TB.Text;
-                    //_account.AC_Password = MyHash.GetHashString(Password_TB.Text);
+                    _account.AC_Password = Password_TB.Text != ""
+                        ? MyMethods.GetHashString(Password_TB.Text)
+                        : _account.AC_Password;
                     _artist.ART_FullName = FullName_TB.Text;
                     _artist.ART_Age = int.Parse(Age_TB.Text);
                     db.Entry(_artist).State = EntityState.Modified;
@@ -119,7 +109,7 @@ namespace WindowsForms_lab_6_v1
         {
             var mousePos = Portfolio_LV.PointToClient(Control.MousePosition);
             var hitTest = Portfolio_LV.HitTest(mousePos);
-            var orderEditing = new OrderEditing((Order)(hitTest.Item.Tag));
+            var orderEditing = new OrderEditing((Order) (hitTest.Item.Tag));
             orderEditing.Show();
         }
 

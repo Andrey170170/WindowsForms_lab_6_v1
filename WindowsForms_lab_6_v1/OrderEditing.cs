@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -16,18 +11,18 @@ namespace WindowsForms_lab_6_v1
     public partial class OrderEditing : Form
     {
         private readonly Order _order = new Order();
-        private readonly int _id;
+        private readonly Portfolio _portfolio = new Portfolio();
+
 
         public OrderEditing()
         {
-
+            InitializeComponent();
         }
 
-        public OrderEditing(int UserId)
+        public OrderEditing(int userId)
         {
             InitializeComponent();
 
-            _id = UserId;
             Save_B = new Button();
             Cancel_B = new Button();
             DeleteImg_B = new Button();
@@ -35,25 +30,25 @@ namespace WindowsForms_lab_6_v1
             // 
             // Save_B
             // 
-            Save_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Save_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Save_B.Location = new Point(231, 705);
             Save_B.Name = "Save_B";
             Save_B.Size = new Size(111, 43);
             Save_B.TabIndex = 0;
             Save_B.Text = "Сохранить";
             Save_B.UseVisualStyleBackColor = true;
-            Save_B.Click += new EventHandler(Save_B_Click);
+            Save_B.Click += Save_B_Click;
             // 
             // Cancel_B
             // 
-            Cancel_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Cancel_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Cancel_B.Location = new Point(348, 705);
             Cancel_B.Name = "Cancel_B";
             Cancel_B.Size = new Size(111, 43);
             Cancel_B.TabIndex = 1;
             Cancel_B.Text = "Сбросить";
             Cancel_B.UseVisualStyleBackColor = true;
-            Cancel_B.Click += new EventHandler(Cancel_B_Click);
+            Cancel_B.Click += Cancel_B_Click;
             // 
             // DeleteImg_B
             // 
@@ -63,7 +58,7 @@ namespace WindowsForms_lab_6_v1
             DeleteImg_B.TabIndex = 25;
             DeleteImg_B.Text = "Удалить";
             DeleteImg_B.UseVisualStyleBackColor = true;
-            DeleteImg_B.Click += new EventHandler(DeleteImg_B_Click);
+            DeleteImg_B.Click += DeleteImg_B_Click;
             // 
             // PlaceImg_B
             // 
@@ -73,16 +68,16 @@ namespace WindowsForms_lab_6_v1
             PlaceImg_B.TabIndex = 26;
             PlaceImg_B.Text = "Установить";
             PlaceImg_B.UseVisualStyleBackColor = true;
-            PlaceImg_B.Click += new EventHandler(Order_Img_Click);
+            PlaceImg_B.Click += Order_Img_Click;
 
             Controls.Add(Cancel_B);
             Controls.Add(Save_B);
             Controls.Add(PlaceImg_B);
             Controls.Add(DeleteImg_B);
 
-            using (var db = new OAIP_6_v1Entities())
+            using (var db = new lab_OAIP_6_v1Entities())
             {
-                OrderALogin_TB.Text = db.Accounts.First(account => account.AC_Account_ID == UserId)
+                OrderALogin_TB.Text = db.Accounts.First(account => account.AC_Account_ID == userId)
                     .AC_Login;
             }
         }
@@ -102,48 +97,48 @@ namespace WindowsForms_lab_6_v1
             // Save_B
             // 
             Save_B.Enabled = false;
-            Save_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Save_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Save_B.Location = new Point(93, 705);
             Save_B.Name = "Save_B";
             Save_B.Size = new Size(111, 43);
             Save_B.TabIndex = 0;
             Save_B.Text = "Сохранить";
             Save_B.UseVisualStyleBackColor = true;
-            Save_B.Click += new EventHandler(Save_B_Click);
+            Save_B.Click += Save_B_Click;
             // 
             // Cancel_B
             // 
             Cancel_B.Enabled = false;
-            Cancel_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Cancel_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Cancel_B.Location = new Point(210, 705);
             Cancel_B.Name = "Cancel_B";
             Cancel_B.Size = new Size(111, 43);
             Cancel_B.TabIndex = 1;
             Cancel_B.Text = "Сбросить";
             Cancel_B.UseVisualStyleBackColor = true;
-            Cancel_B.Click += new EventHandler(Cancel_B_Click);
+            Cancel_B.Click += Cancel_B_Click;
             // 
             // Change_B
             // 
-            Change_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Change_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Change_B.Location = new Point(327, 705);
             Change_B.Name = "Change_B";
             Change_B.Size = new Size(111, 43);
             Change_B.TabIndex = 2;
             Change_B.Text = "Изменить";
             Change_B.UseVisualStyleBackColor = true;
-            Change_B.Click += new EventHandler(Change_B_Click);
+            Change_B.Click += Change_B_Click;
             // 
             // Delete_B
             // 
-            Delete_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            Delete_B.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Delete_B.Location = new Point(444, 705);
             Delete_B.Name = "Delete_B";
             Delete_B.Size = new Size(111, 43);
             Delete_B.TabIndex = 3;
             Delete_B.Text = "Удалить";
             Delete_B.UseVisualStyleBackColor = true;
-            Delete_B.Click += new EventHandler(Delete_B_Click);
+            Delete_B.Click += Delete_B_Click;
             // 
             // ChangeImg_B
             // 
@@ -154,7 +149,7 @@ namespace WindowsForms_lab_6_v1
             ChangeImg_B.TabIndex = 23;
             ChangeImg_B.Text = "Изменить";
             ChangeImg_B.UseVisualStyleBackColor = true;
-            ChangeImg_B.Click += new EventHandler(Order_Img_Click);
+            ChangeImg_B.Click += Order_Img_Click;
             // 
             // SaveImg_B
             // 
@@ -164,7 +159,7 @@ namespace WindowsForms_lab_6_v1
             SaveImg_B.TabIndex = 24;
             SaveImg_B.Text = "Скачать";
             SaveImg_B.UseVisualStyleBackColor = true;
-            SaveImg_B.Click += new EventHandler(SaveImg_B_Click);
+            SaveImg_B.Click += SaveImg_B_Click;
             // 
             // DeleteImg_B
             // 
@@ -175,7 +170,7 @@ namespace WindowsForms_lab_6_v1
             DeleteImg_B.TabIndex = 25;
             DeleteImg_B.Text = "Удалить";
             DeleteImg_B.UseVisualStyleBackColor = true;
-            DeleteImg_B.Click += new EventHandler(DeleteImg_B_Click);
+            DeleteImg_B.Click += DeleteImg_B_Click;
 
             Controls.Add(DeleteImg_B);
             Controls.Add(SaveImg_B);
@@ -191,12 +186,15 @@ namespace WindowsForms_lab_6_v1
             OrderDecs_TB.Text = order.ORD_Description;
             var img = MyMethods.ByteArrayToImage(order.ORD_Picture);
             Order_Img.Image = MyMethods.ByteArrayToImage(order.ORD_Picture);
-            using (var db = new OAIP_6_v1Entities())
+            using (var db = new lab_OAIP_6_v1Entities())
             {
+                _portfolio = db.Portfolios.FirstOrDefault(por => por.POR_ORD_ID == _order.ORD_ID) ?? new Portfolio();
+
                 OrderALogin_TB.Text = db.Accounts.First(account => account.AC_Account_ID == order.ORD_AC_Account_ID)
                     .AC_Login;
-                OrderCLogin_TB.Text = order.ORD_Customer_ID != null
-                    ? db.Accounts.First(account => account.AC_Account_ID == order.ORD_Customer_ID).AC_Login
+
+                OrderCLogin_TB.Text = _portfolio.POR_CUS_ID != null
+                    ? db.Accounts.First(account => account.AC_Account_ID == _portfolio.POR_CUS_ID).AC_Login
                     : "";
             }
 
@@ -225,7 +223,7 @@ namespace WindowsForms_lab_6_v1
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message); 
+                MessageBox.Show(exception.Message);
             }
         }
 
@@ -233,18 +231,15 @@ namespace WindowsForms_lab_6_v1
         {
             try
             {
-                using (var db = new OAIP_6_v1Entities())
+                if (OrderName_TB.Text.Trim() == "") throw new Exception("Введите имя заказа");
+                if (OrderALogin_TB.Text.Trim() == "") throw new Exception("Введите логин создателя");
+                if (OrderPrice_TB.Text.Trim() == "") throw new Exception("Введите цену заказа");
+                if (OrderDecs_TB.Text.Trim() == "") throw new Exception("Введите описание заказа");
+                using (var db = new lab_OAIP_6_v1Entities())
                 {
                     var artistId = db.Accounts.FirstOrDefault(account => account.AC_Login == OrderALogin_TB.Text);
-                    
                     _order.ORD_AC_Account_ID =
                         artistId?.AC_Account_ID ?? throw new Exception("Художника с таким логином не существует");
-                    if (OrderCLogin_TB.Text != "")
-                    {
-                        var customerId = db.Accounts.FirstOrDefault(account => account.AC_Login == OrderCLogin_TB.Text);
-                        _order.ORD_Customer_ID =
-                            customerId?.AC_Account_ID ?? throw new Exception("Заказчика с таким логином не существует");
-                    }
                     _order.ORD_Name = OrderName_TB.Text;
                     _order.ORD_Picture = MyMethods.ImageToByteArray(Order_Img.Image);
                     _order.ORD_Description = OrderDecs_TB.Text;
@@ -256,8 +251,29 @@ namespace WindowsForms_lab_6_v1
                         _order.ORD_ST_ID = 5;
                         db.Entry(_order).State = EntityState.Added;
                     }
+
                     db.SaveChanges();
                 }
+
+                using (var db = new lab_OAIP_6_v1Entities())
+                {
+                    var artistId = db.Accounts.FirstOrDefault(account => account.AC_Login == OrderALogin_TB.Text);
+                    _portfolio.POR_ART_ID = artistId.AC_Account_ID;
+                    if (OrderCLogin_TB.Text != "")
+                    {
+                        var customerId = db.Accounts.FirstOrDefault(account => account.AC_Login == OrderCLogin_TB.Text);
+                        _portfolio.POR_CUS_ID =
+                            customerId?.AC_Account_ID ?? throw new Exception("Заказчика с таким логином не существует");
+                    }
+
+                    _portfolio.POR_ORD_ID = _order.ORD_ID == 0
+                        ? db.Orders.Where(ord => ord.ORD_AC_Account_ID == artistId.AC_Account_ID).ToList().Last().ORD_ID
+                        : _order.ORD_ID;
+
+                    db.Entry(_portfolio).State = _portfolio.POR_ID != 0 ? EntityState.Modified : EntityState.Added;
+                    db.SaveChanges();
+                }
+
                 ChangeState(false);
                 MessageBox.Show("Сохранение прошло успешно");
             }
@@ -271,14 +287,15 @@ namespace WindowsForms_lab_6_v1
         {
             Order_Img.Image = MyMethods.ByteArrayToImage(_order.ORD_Picture);
             OrderName_TB.Text = _order.ORD_Name;
-            using (var db = new OAIP_6_v1Entities())
+            using (var db = new lab_OAIP_6_v1Entities())
             {
                 OrderALogin_TB.Text = db.Accounts.First(account => account.AC_Account_ID == _order.ORD_AC_Account_ID)
                     .AC_Login;
-                OrderCLogin_TB.Text = _order.ORD_Customer_ID != null
-                    ? db.Accounts.First(account => account.AC_Account_ID == _order.ORD_Customer_ID).AC_Login
+                OrderCLogin_TB.Text = _portfolio.POR_CUS_ID != null
+                    ? db.Accounts.First(account => account.AC_Account_ID == _portfolio.POR_CUS_ID).AC_Login
                     : "";
             }
+
             OrderPrice_TB.Text = _order.ORD_Cost.ToString();
             OrderDecs_TB.Text = _order.ORD_Description;
             ChangeState(false);
@@ -288,13 +305,14 @@ namespace WindowsForms_lab_6_v1
         {
             try
             {
-                using (var db = new OAIP_6_v1Entities())
+                using (var db = new lab_OAIP_6_v1Entities())
                 {
                     db.Entry(_order).State = EntityState.Deleted;
                     db.SaveChanges();
                 }
+
                 Close();
-                MessageBox.Show("Удаление успешно");
+                MessageBox.Show(@"Удаление успешно");
             }
             catch (Exception exception)
             {

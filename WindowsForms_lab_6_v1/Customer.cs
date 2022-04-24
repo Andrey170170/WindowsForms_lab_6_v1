@@ -14,6 +14,8 @@ namespace WindowsForms_lab_6_v1
     
     public partial class Customer
     {
+        
+
         public Customer(int id, string Name, int age)
         {
             CUS_AC_Account_ID = id;
@@ -21,11 +23,13 @@ namespace WindowsForms_lab_6_v1
             CUS_Age = age;
         }
 
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
             this.OrdersInProgresses = new HashSet<OrdersInProgress>();
-            this.Orders = new HashSet<Order>();
+            this.Portfolios = new HashSet<Portfolio>();
         }
     
         public int CUS_AC_Account_ID { get; set; }
@@ -36,6 +40,6 @@ namespace WindowsForms_lab_6_v1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrdersInProgress> OrdersInProgresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Portfolio> Portfolios { get; set; }
     }
 }
