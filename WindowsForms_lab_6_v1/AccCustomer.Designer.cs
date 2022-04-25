@@ -47,9 +47,9 @@
             this.Update_B = new System.Windows.Forms.Button();
             this.MyOrders_LV = new System.Windows.Forms.ListView();
             this.OrderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Cost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.OrderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label7 = new System.Windows.Forms.Label();
-            this.Cost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -264,6 +264,11 @@
             this.OrderName.Text = "Название";
             this.OrderName.Width = 400;
             // 
+            // Cost
+            // 
+            this.Cost.Text = "Цена";
+            this.Cost.Width = 100;
+            // 
             // OrderStatus
             // 
             this.OrderStatus.Text = "Статус";
@@ -279,11 +284,6 @@
             this.label7.Size = new System.Drawing.Size(335, 63);
             this.label7.TabIndex = 28;
             this.label7.Text = "Мои заказы";
-            // 
-            // Cost
-            // 
-            this.Cost.Text = "Цена";
-            this.Cost.Width = 100;
             // 
             // AccCustomer
             // 

@@ -40,9 +40,9 @@ namespace WindowsForms_lab_6_v1
                         throw new Exception("Пользователь с таким логином уже существует");
                     }
                     db.Accounts.Add(new Account(
-                        Login_TB.Text,
-                        MyMethods.GetHashString(Password_TB.Text),
-                        Role_CB.SelectedItem.ToString()));
+                        Login_TB.Text.Trim(),
+                        MyMethods.GetHashString(Password_TB.Text.Trim()),
+                        Role_CB.SelectedItem.ToString().Trim()));
                     db.SaveChanges();
                     MessageBox.Show($"User {Login_TB.Text} registered successfully");
                     var signIn = new SignIn();

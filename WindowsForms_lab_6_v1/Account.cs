@@ -20,6 +20,8 @@ namespace WindowsForms_lab_6_v1
             AC_Password = password;
             AC_Role = role;
         }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Account()
         {

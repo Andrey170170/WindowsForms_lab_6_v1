@@ -15,8 +15,8 @@ namespace WindowsForms_lab_6_v1
     public partial class OrdersInProgress
     {
         public int OIP_ORD_ID { get; set; }
-        public Nullable<int> OIP_Cus_ID { get; set; }
-        public Nullable<int> OIP_ART_ID { get; set; }
+        public int OIP_Cus_ID { get; set; }
+        public int OIP_ART_ID { get; set; }
     
         public virtual Artist Artist { get; set; }
         public virtual Customer Customer { get; set; }

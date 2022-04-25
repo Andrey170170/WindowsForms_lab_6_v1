@@ -47,8 +47,8 @@
             <PropertyRef Name="OIP_ORD_ID" />
           </Key>
           <Property Name="OIP_ORD_ID" Type="int" Nullable="false" />
-          <Property Name="OIP_Cus_ID" Type="int" />
-          <Property Name="OIP_ART_ID" Type="int" />
+          <Property Name="OIP_Cus_ID" Type="int" Nullable="false" />
+          <Property Name="OIP_ART_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Portfolios">
           <Key>
@@ -128,8 +128,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrdersInP__OIP_A__38996AB5">
-          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+        <Association Name="FK__OrdersInP__OIP_A__3A4CA8FD">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
           <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
@@ -140,8 +140,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrdersInP__OIP_C__37A5467C">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+        <Association Name="FK__OrdersInP__OIP_C__3B40CD36">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
           <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
@@ -256,11 +256,11 @@
             <End Role="Statuses" EntitySet="Statuses" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrdersInP__OIP_A__38996AB5" Association="Self.FK__OrdersInP__OIP_A__38996AB5">
+          <AssociationSet Name="FK__OrdersInP__OIP_A__3A4CA8FD" Association="Self.FK__OrdersInP__OIP_A__3A4CA8FD">
             <End Role="Artists" EntitySet="Artists" />
             <End Role="OrdersInProgress" EntitySet="OrdersInProgress" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrdersInP__OIP_C__37A5467C" Association="Self.FK__OrdersInP__OIP_C__37A5467C">
+          <AssociationSet Name="FK__OrdersInP__OIP_C__3B40CD36" Association="Self.FK__OrdersInP__OIP_C__3B40CD36">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="OrdersInProgress" EntitySet="OrdersInProgress" />
           </AssociationSet>
@@ -340,8 +340,8 @@
             <PropertyRef Name="OIP_ORD_ID" />
           </Key>
           <Property Name="OIP_ORD_ID" Type="Int32" Nullable="false" />
-          <Property Name="OIP_Cus_ID" Type="Int32" />
-          <Property Name="OIP_ART_ID" Type="Int32" />
+          <Property Name="OIP_Cus_ID" Type="Int32" Nullable="false" />
+          <Property Name="OIP_ART_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Artist" Relationship="Self.FK__OrdersInP__OIP_A__38996AB5" FromRole="OrdersInProgress" ToRole="Artists" />
           <NavigationProperty Name="Customer" Relationship="Self.FK__OrdersInP__OIP_C__37A5467C" FromRole="OrdersInProgress" ToRole="Customers" />
           <NavigationProperty Name="Order" Relationship="Self.FK__OrdersInP__OIP_O__36B12243" FromRole="OrdersInProgress" ToRole="Orders" />
@@ -417,7 +417,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__OrdersInP__OIP_A__38996AB5">
-          <End Role="Artists" Type="Self.Artist" Multiplicity="0..1" />
+          <End Role="Artists" Type="Self.Artist" Multiplicity="1" />
           <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
@@ -441,7 +441,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__OrdersInP__OIP_C__37A5467C">
-          <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
           <End Role="OrdersInProgress" Type="Self.OrdersInProgress" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">

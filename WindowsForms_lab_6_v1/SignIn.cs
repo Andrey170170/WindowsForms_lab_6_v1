@@ -31,12 +31,12 @@ namespace WindowsForms_lab_6_v1
         {
             try
             {
-                if (Login_TB.Text == "")
+                if (Login_TB.Text.Trim() == "")
                 {
                     throw new Exception("Login is empty");
                 }
 
-                if (Password_TB.Text == "")
+                if (Password_TB.Text.Trim() == "")
                 {
                     throw new Exception("Password is empty");
                 }
@@ -45,7 +45,7 @@ namespace WindowsForms_lab_6_v1
                 {
                     foreach (var account in db.Accounts)
                     {
-                        if (Login_TB.Text == account.AC_Login && MyMethods.GetHashString(Password_TB.Text) == account.AC_Password)
+                        if (Login_TB.Text.Trim() == account.AC_Login && MyMethods.GetHashString(Password_TB.Text.Trim()) == account.AC_Password)
                         {
                             switch (account.AC_Role)
                             {

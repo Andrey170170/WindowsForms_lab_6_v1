@@ -14,6 +14,7 @@ namespace WindowsForms_lab_6_v1
     
     public partial class Artist
     {
+        
         public Artist(int id, string Name, int age)
         {
             ART_AC_Account_ID = id;

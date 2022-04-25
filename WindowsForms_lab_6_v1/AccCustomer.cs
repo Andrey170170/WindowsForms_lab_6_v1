@@ -66,7 +66,9 @@ namespace WindowsForms_lab_6_v1
                 using (var db = new lab_OAIP_6_v1Entities())
                 {
                     _account.AC_Login = Login_TB.Text;
-                    _account.AC_Password = MyMethods.GetHashString(Password_TB.Text);
+                    _account.AC_Password = Password_TB.Text != ""
+                        ? MyMethods.GetHashString(Password_TB.Text.Trim())
+                        : _account.AC_Password; ;
                     _customer.CUS_FullName = FullName_TB.Text;
                     _customer.CUS_Age = int.Parse(Age_TB.Text);
                     db.Entry(_customer).State = EntityState.Modified;

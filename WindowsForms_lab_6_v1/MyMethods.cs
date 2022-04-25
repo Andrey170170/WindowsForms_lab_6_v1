@@ -91,6 +91,43 @@ namespace WindowsForms_lab_6_v1
                 }
             }
         }
+
+        public static void UpdateOrderLV(Account account, ListView listView)
+        {
+            listView.Items.Clear();
+            using (var db = new lab_OAIP_6_v1Entities())
+            {
+                var orders = db.Orders.Where(order => order.ORD_ST_ID == 3).ToList();
+                foreach (var order in orders)
+                {
+                    var item = listView.Items.Add(order.ORD_Name);
+                    item.UseItemStyleForSubItems = false;
+                    item.Tag = order;
+                    var subItemCost = item.SubItems.Add(order.ORD_Cost.ToString());
+                    var subItemOwner = item.SubItems.Add(db.Accounts.FirstOrDefault(account1 => account1.AC_Account_ID == order.ORD_AC_Account_ID)?.AC_Login);
+                }
+
+                
+            }
+        }
+
+        public static void UpdateMyOrderLV(Account account, ListView listView)
+        {
+            listView.Items.Clear();
+            using (var db = new lab_OAIP_6_v1Entities())
+            {
+                var myOrders = db.OrdersInProgresses.Where(order => order.OIP_ART_ID == account.AC_Account_ID).ToList();
+                foreach (var myOrder in myOrders)
+                {
+                    var order = db.Orders.First(ord => ord.ORD_ID == myOrder.OIP_ORD_ID);
+                    var item = listView.Items.Add(order.ORD_Name);
+                    item.UseItemStyleForSubItems = false;
+                    item.Tag = myOrder;
+                    var subItemCost = item.SubItems.Add(order.ORD_Cost.ToString());
+                    var subItemOwner = item.SubItems.Add(db.Accounts.FirstOrDefault(account1 => account1.AC_Account_ID == order.ORD_AC_Account_ID)?.AC_Login);
+                }
+            }
+        }
     }
 }
 

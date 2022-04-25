@@ -110,11 +110,23 @@
     <Compile Include="OrderEditing.Designer.cs">
       <DependentUpon>OrderEditing.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderInProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderInProgressForm.Designer.cs">
+      <DependentUpon>OrderInProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrdersInProgress.cs">
       <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
     <Compile Include="Portfolio.cs">
       <DependentUpon>2Try.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PreviewOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PreviewOrder.Designer.cs">
+      <DependentUpon>PreviewOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="SignIn.cs">
       <SubType>Form</SubType>
@@ -153,6 +165,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OrderEditing.resx">
       <DependentUpon>OrderEditing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderInProgressForm.resx">
+      <DependentUpon>OrderInProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreviewOrder.resx">
+      <DependentUpon>PreviewOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SignIn.resx">
       <DependentUpon>SignIn.cs</DependentUpon>

@@ -74,7 +74,7 @@ namespace WindowsForms_lab_6_v1
                 {
                     _account.AC_Login = Login_TB.Text;
                     _account.AC_Password = Password_TB.Text != ""
-                        ? MyMethods.GetHashString(Password_TB.Text)
+                        ? MyMethods.GetHashString(Password_TB.Text.Trim())
                         : _account.AC_Password;
                     _artist.ART_FullName = FullName_TB.Text;
                     _artist.ART_Age = int.Parse(Age_TB.Text);
@@ -122,6 +122,38 @@ namespace WindowsForms_lab_6_v1
         {
             var orderEditing = new OrderEditing(_account.AC_Account_ID);
             orderEditing.Show();
+        }
+
+        private void Orders_P_Enter(object sender, EventArgs e)
+        {
+            MyMethods.UpdateOrderLV(_account, Orders_LV);
+            MyMethods.UpdateMyOrderLV(_account, MyOrder_LV);
+        }
+
+        private void Order_Update_B_Click(object sender, EventArgs e)
+        {
+            MyMethods.UpdateOrderLV(_account, Orders_LV);
+        }
+
+        private void MyOrder_Update_B_Click(object sender, EventArgs e)
+        {
+            MyMethods.UpdateMyOrderLV(_account, MyOrder_LV);
+        }
+
+        private void MyOrder_LV_Click(object sender, EventArgs e)
+        {
+            var mousePos = MyOrder_LV.PointToClient(Control.MousePosition);
+            var hitTest = MyOrder_LV.HitTest(mousePos);
+            var inProgressForm = new OrderInProgressForm((OrdersInProgress)(hitTest.Item.Tag));
+            inProgressForm.Show();
+        }
+
+        private void Orders_LV_Click(object sender, EventArgs e)
+        {
+            var mousePos = Orders_LV.PointToClient(Control.MousePosition);
+            var hitTest = Orders_LV.HitTest(mousePos);
+            var previewOrder = new PreviewOrder((Order)(hitTest.Item.Tag), _account);
+            previewOrder.Show();
         }
     }
 }
