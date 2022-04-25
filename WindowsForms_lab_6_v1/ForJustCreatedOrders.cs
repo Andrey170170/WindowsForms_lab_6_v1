@@ -12,16 +12,16 @@ using System.Windows.Forms;
 
 namespace WindowsForms_lab_6_v1
 {
-    public partial class CustOrderEditing : Form
+    public partial class ForJustCreatedOrders : Form
     {
         private readonly Account _account;
         private readonly Order _order = new Order();
-        public CustOrderEditing()
+        public ForJustCreatedOrders()
         {
             InitializeComponent();
         }
 
-        public CustOrderEditing(Account account)
+        public ForJustCreatedOrders(Account account)
         {
             InitializeComponent();
             Chanege_B.Enabled = false;
@@ -35,7 +35,7 @@ namespace WindowsForms_lab_6_v1
             Status_L.Text = "Не создан";
         }
 
-        public CustOrderEditing(Order order)
+        public ForJustCreatedOrders(Order order)
         {
             InitializeComponent();
             _order = order;

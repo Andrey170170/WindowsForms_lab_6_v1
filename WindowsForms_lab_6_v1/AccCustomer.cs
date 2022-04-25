@@ -98,7 +98,7 @@ namespace WindowsForms_lab_6_v1
 
         private void Add_B_Click(object sender, EventArgs e)
         {
-            var newOrder = new CustOrderEditing(_account);
+            var newOrder = new ForJustCreatedOrders(_account);
             newOrder.Show();
         }
 
@@ -111,8 +111,13 @@ namespace WindowsForms_lab_6_v1
         {
             var mousePos = MyOrders_LV.PointToClient(Control.MousePosition);
             var hitTest = MyOrders_LV.HitTest(mousePos);
-            var custOrderEditing = new CustOrderEditing((Order)(hitTest.Item.Tag));
-            custOrderEditing.Show();
+            var order = (Order) (hitTest.Item.Tag);
+            Form justCreatedOrders;
+            if (order.ORD_ST_ID == 3)
+                justCreatedOrders = new ForJustCreatedOrders(order);
+            else
+                justCreatedOrders = new ForOrdersInWorkOrCompletedOne(order);
+            justCreatedOrders.Show();
         }
     }
 }
