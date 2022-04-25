@@ -1,6 +1,6 @@
 ﻿namespace WindowsForms_lab_6_v1
 {
-    partial class CustOrderEditing
+    partial class ForJustCreatedOrders
     {
         /// <summary>
         /// Required designer variable.

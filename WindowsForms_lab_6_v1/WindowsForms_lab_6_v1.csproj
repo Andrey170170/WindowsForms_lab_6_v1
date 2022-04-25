@@ -94,11 +94,17 @@
     <Compile Include="Customer.cs">
       <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
-    <Compile Include="CustOrderEditing.cs">
+    <Compile Include="ForJustCreatedOrders.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustOrderEditing.Designer.cs">
-      <DependentUpon>CustOrderEditing.cs</DependentUpon>
+    <Compile Include="ForJustCreatedOrders.Designer.cs">
+      <DependentUpon>ForJustCreatedOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ForOrdersInWorkOrCompletedOne.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ForOrdersInWorkOrCompletedOne.Designer.cs">
+      <DependentUpon>ForOrdersInWorkOrCompletedOne.cs</DependentUpon>
     </Compile>
     <Compile Include="MyMethods.cs" />
     <Compile Include="Order.cs">
@@ -160,8 +166,11 @@
     <EmbeddedResource Include="AccCustomer.resx">
       <DependentUpon>AccCustomer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustOrderEditing.resx">
-      <DependentUpon>CustOrderEditing.cs</DependentUpon>
+    <EmbeddedResource Include="ForJustCreatedOrders.resx">
+      <DependentUpon>ForJustCreatedOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ForOrdersInWorkOrCompletedOne.resx">
+      <DependentUpon>ForOrdersInWorkOrCompletedOne.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderEditing.resx">
       <DependentUpon>OrderEditing.cs</DependentUpon>
