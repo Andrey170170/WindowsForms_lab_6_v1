@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace WindowsForms_lab_6_v1
@@ -43,19 +44,20 @@ namespace WindowsForms_lab_6_v1
 
                 using (var db = new lab_OAIP_6_v1Entities())
                 {
-                    foreach (var account in db.Accounts)
+                    var acc = db.Accounts.FirstOrDefault(account => account.AC_Login == Login_TB.Text.Trim());
+                    if (acc != null)
                     {
-                        if (Login_TB.Text.Trim() == account.AC_Login && MyMethods.GetHashString(Password_TB.Text.Trim()) == account.AC_Password)
+                        if (MyMethods.GetHashString(Password_TB.Text.Trim()) == acc.AC_Password)
                         {
-                            switch (account.AC_Role)
+                            switch (acc.AC_Role)
                             {
                                 case "Художник":
-                                    var artist = new AccArtist(account);
+                                    var artist = new AccArtist(acc);
                                     this.Hide();
                                     artist.Show();
-                                    return; 
+                                    return;
                                 case "Заказчик":
-                                    var customer = new AccCustomer(account);
+                                    var customer = new AccCustomer(acc);
                                     this.Hide();
                                     customer.Show();
                                     return;
@@ -63,8 +65,15 @@ namespace WindowsForms_lab_6_v1
                                     throw new Exception("ЭЭЭ ты меня сломал");
                             }
                         }
+                        else
+                        {
+                            throw new Exception("Неправильный пароль");
+                        }
                     }
-                    throw new Exception("Пароль или Логин не верны");
+                    else
+                    {
+                        throw new Exception("Логин не верен");
+                    }
                 }
             }
             catch (Exception exception)

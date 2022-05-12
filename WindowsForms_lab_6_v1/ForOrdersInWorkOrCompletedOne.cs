@@ -114,9 +114,13 @@ namespace WindowsForms_lab_6_v1
             {
                 using (var db = new lab_OAIP_6_v1Entities())
                 {
+                    db.Entry(db.OrdersInProgresses.FirstOrDefault(order => order.OIP_ORD_ID == _order.ORD_ID)).State = EntityState.Deleted;
                     db.Entry(_order).State = EntityState.Deleted;
                     db.SaveChanges();
                 }
+
+                MessageBox.Show("Удаление прошло успешно");
+                this.Close();
             }
             catch (Exception exception)
             {
