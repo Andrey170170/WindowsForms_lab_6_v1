@@ -79,7 +79,7 @@ namespace WindowsForms_lab_6_v1
             catch (DbEntityValidationException ex)
             {
                 var error = "";
-                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
+                foreach (var validationError in ex.EntityValidationErrors)
                 {
                     error += "Object: " + validationError.Entry.Entity + '\n';
                     error = validationError.ValidationErrors.Aggregate(error, (current, err) => current + (err.ErrorMessage + '\n'));
