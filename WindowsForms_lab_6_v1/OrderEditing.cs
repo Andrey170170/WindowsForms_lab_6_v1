@@ -308,6 +308,8 @@ namespace WindowsForms_lab_6_v1
                 using (var db = new lab_OAIP_6_v1Entities())
                 {
                     db.Entry(_order).State = EntityState.Deleted;
+                    var portfolio = db.Portfolios.FirstOrDefault(port => port.POR_ORD_ID == _order.ORD_ID);
+                    db.Entry(portfolio).State = EntityState.Deleted;
                     db.SaveChanges();
                 }
 

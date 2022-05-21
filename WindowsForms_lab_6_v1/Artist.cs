@@ -13,21 +13,9 @@ namespace WindowsForms_lab_6_v1
     using System.Collections.Generic;
     
     public partial class Artist
-    {
-        
-        public Artist(int id, string Name, int age)
-        {
-            ART_AC_Account_ID = id;
-            ART_FullName = Name;
-            ART_Age = age;
-        }
+    { 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Artist()
-        {
-            this.OrdersInProgresses = new HashSet<OrdersInProgress>();
-            this.Portfolio = new HashSet<Portfolio>();
-        }
-    
+  
         public int ART_AC_Account_ID { get; set; }
         public string ART_FullName { get; set; }
         public int ART_Age { get; set; }

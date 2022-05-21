@@ -88,12 +88,15 @@
     <Compile Include="Account.cs">
       <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
+    <Compile Include="AccountConstr.cs" />
     <Compile Include="Artist.cs">
       <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
+    <Compile Include="ArtistConstr.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>2Try.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomerConstr.cs" />
     <Compile Include="ForJustCreatedOrders.cs">
       <SubType>Form</SubType>
     </Compile>
