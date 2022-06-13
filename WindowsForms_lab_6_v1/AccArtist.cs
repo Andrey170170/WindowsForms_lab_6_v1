@@ -120,7 +120,7 @@ namespace WindowsForms_lab_6_v1
 
         private void Add_B_Click(object sender, EventArgs e)
         {
-            var orderEditing = new OrderEditing(_account.AC_Account_ID);
+            var orderEditing = new OrderCreation(_account.AC_Account_ID);
             orderEditing.Show();
         }
 
